@@ -69,6 +69,7 @@
             this.btnReceber.TabIndex = 3;
             this.btnReceber.Text = "Receber";
             this.btnReceber.UseVisualStyleBackColor = true;
+            this.btnReceber.Click += new System.EventHandler(this.btnReceber_Click);
             // 
             // HttpTeste
             // 
