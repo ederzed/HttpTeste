@@ -129,6 +129,8 @@
             // 
             // tmResultado
             // 
+            this.tmResultado.Enabled = true;
+            this.tmResultado.Interval = 8000;
             this.tmResultado.Tick += new System.EventHandler(this.tmResultado_Tick);
             // 
             // lblResultado
