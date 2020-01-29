@@ -63,14 +63,10 @@ namespace HttpTeste
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var responseText = streamReader.ReadToEnd();
-                
+
             }
 
 
-
-
-            //string resultadoReq = JsonConvert.SerializeObject(mensagem);
-            //File.WriteAllText(@"a.json", resultadoReq);
             txtRequest.Text = "Mensagem arquivada";
         }
     

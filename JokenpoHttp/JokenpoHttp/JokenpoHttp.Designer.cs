@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pbPlayer1 = new System.Windows.Forms.PictureBox();
             this.pbPlayer2 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,6 +37,8 @@
             this.btnPapel = new System.Windows.Forms.Button();
             this.btnTesoura = new System.Windows.Forms.Button();
             this.btnConfirma = new System.Windows.Forms.Button();
+            this.tmResultado = new System.Windows.Forms.Timer(this.components);
+            this.lblResultado = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPlayer2)).BeginInit();
             this.SuspendLayout();
@@ -76,9 +79,11 @@
             this.btnConectar.TabIndex = 3;
             this.btnConectar.Text = "Conectar";
             this.btnConectar.UseVisualStyleBackColor = true;
+            this.btnConectar.Click += new System.EventHandler(this.btnConectar_Click);
             // 
             // btnPedra
             // 
+            this.btnPedra.Enabled = false;
             this.btnPedra.Location = new System.Drawing.Point(192, 356);
             this.btnPedra.Name = "btnPedra";
             this.btnPedra.Size = new System.Drawing.Size(75, 23);
@@ -88,6 +93,7 @@
             // 
             // btnPapel
             // 
+            this.btnPapel.Enabled = false;
             this.btnPapel.Location = new System.Drawing.Point(271, 356);
             this.btnPapel.Name = "btnPapel";
             this.btnPapel.Size = new System.Drawing.Size(75, 23);
@@ -97,6 +103,7 @@
             // 
             // btnTesoura
             // 
+            this.btnTesoura.Enabled = false;
             this.btnTesoura.Location = new System.Drawing.Point(352, 356);
             this.btnTesoura.Name = "btnTesoura";
             this.btnTesoura.Size = new System.Drawing.Size(75, 23);
@@ -106,6 +113,7 @@
             // 
             // btnConfirma
             // 
+            this.btnConfirma.Enabled = false;
             this.btnConfirma.Location = new System.Drawing.Point(192, 385);
             this.btnConfirma.Name = "btnConfirma";
             this.btnConfirma.Size = new System.Drawing.Size(235, 23);
@@ -113,11 +121,22 @@
             this.btnConfirma.Text = "Confirmar";
             this.btnConfirma.UseVisualStyleBackColor = true;
             // 
+            // lblResultado
+            // 
+            this.lblResultado.AutoSize = true;
+            this.lblResultado.Location = new System.Drawing.Point(9, 428);
+            this.lblResultado.Name = "lblResultado";
+            this.lblResultado.Size = new System.Drawing.Size(109, 13);
+            this.lblResultado.TabIndex = 8;
+            this.lblResultado.Text = "Aguardando conexão";
+            this.lblResultado.Click += new System.EventHandler(this.lblResultado_Click);
+            // 
             // JokenpoHttp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 450);
+            this.Controls.Add(this.lblResultado);
             this.Controls.Add(this.btnConfirma);
             this.Controls.Add(this.btnTesoura);
             this.Controls.Add(this.btnPapel);
@@ -145,6 +164,8 @@
         private System.Windows.Forms.Button btnPapel;
         private System.Windows.Forms.Button btnTesoura;
         private System.Windows.Forms.Button btnConfirma;
+        private System.Windows.Forms.Timer tmResultado;
+        private System.Windows.Forms.Label lblResultado;
     }
 }
 
