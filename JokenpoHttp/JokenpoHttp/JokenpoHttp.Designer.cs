@@ -46,6 +46,7 @@
             // pbPlayer1
             // 
             this.pbPlayer1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbPlayer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPlayer1.Location = new System.Drawing.Point(12, 63);
             this.pbPlayer1.Name = "pbPlayer1";
             this.pbPlayer1.Size = new System.Drawing.Size(253, 241);
@@ -55,6 +56,7 @@
             // pbPlayer2
             // 
             this.pbPlayer2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbPlayer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbPlayer2.Location = new System.Drawing.Point(355, 63);
             this.pbPlayer2.Name = "pbPlayer2";
             this.pbPlayer2.Size = new System.Drawing.Size(253, 241);
@@ -90,6 +92,7 @@
             this.btnPedra.TabIndex = 4;
             this.btnPedra.Text = "Pedra";
             this.btnPedra.UseVisualStyleBackColor = true;
+            this.btnPedra.Click += new System.EventHandler(this.btnPedra_Click);
             // 
             // btnPapel
             // 
@@ -100,6 +103,7 @@
             this.btnPapel.TabIndex = 5;
             this.btnPapel.Text = "Papel";
             this.btnPapel.UseVisualStyleBackColor = true;
+            this.btnPapel.Click += new System.EventHandler(this.btnPapel_Click);
             // 
             // btnTesoura
             // 
@@ -110,6 +114,7 @@
             this.btnTesoura.TabIndex = 6;
             this.btnTesoura.Text = "Tesoura";
             this.btnTesoura.UseVisualStyleBackColor = true;
+            this.btnTesoura.Click += new System.EventHandler(this.btnTesoura_Click);
             // 
             // btnConfirma
             // 
@@ -120,6 +125,11 @@
             this.btnConfirma.TabIndex = 7;
             this.btnConfirma.Text = "Confirmar";
             this.btnConfirma.UseVisualStyleBackColor = true;
+            this.btnConfirma.Click += new System.EventHandler(this.btnConfirma_Click);
+            // 
+            // tmResultado
+            // 
+            this.tmResultado.Tick += new System.EventHandler(this.tmResultado_Tick);
             // 
             // lblResultado
             // 
