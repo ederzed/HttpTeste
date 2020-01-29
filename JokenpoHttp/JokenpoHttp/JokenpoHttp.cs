@@ -28,13 +28,13 @@ namespace JokenpoHttp
             Jogo jogo = getHttp();
             if(jogo.player1 == "-")
             {
-                putHttp("conectado", jogo.player2, 0);
+                putHttp("conectado", jogo.player2, jogo.confirmado);
                 lblResultado.Text = "Conectado como player 1 (esquerda), aguardando oponente";
                 player = 1;
             }
             else if(jogo.player2 == "-")
             {
-                putHttp(jogo.player1, "conectado", 0);
+                putHttp(jogo.player1, "conectado", jogo.confirmado);
                 lblResultado.Text = "Conectado como player 2 (direita)";
                 player = 2;
             }
