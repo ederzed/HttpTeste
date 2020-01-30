@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaralhoHttp", "BaralhoHttp\BaralhoHttp.csproj", "{EF86548A-7BB3-4551-A631-01D9E072508A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF86548A-7BB3-4551-A631-01D9E072508A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF86548A-7BB3-4551-A631-01D9E072508A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF86548A-7BB3-4551-A631-01D9E072508A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF86548A-7BB3-4551-A631-01D9E072508A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC4306E8-6666-487D-9372-9F3CAA2DF562}
+	EndGlobalSection
+EndGlobal

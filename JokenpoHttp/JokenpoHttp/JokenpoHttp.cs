@@ -105,6 +105,8 @@ namespace JokenpoHttp
             player = 0;
             jogada = "";
             lblResultado.Text = "Aguardando conexão";
+            jp1 = null;
+            jp2 = null;
         }
 
         private void btnPedra_Click(object sender, EventArgs e)
@@ -180,6 +182,7 @@ namespace JokenpoHttp
             btnPedra.Enabled = false;
             btnTesoura.Enabled = false;
             btnConfirma.Enabled = false;
+            tmResultado.Enabled = true;
         }
 
         private void tmResultado_Tick(object sender, EventArgs e)
@@ -191,11 +194,14 @@ namespace JokenpoHttp
                 player = 0;
                 jogada = "";
                 lblResultado.Text = "Aguardando conexão";
+                jp1 = null;
+                jp2 = null;
                 btnConectar.Enabled = true;
                 btnPapel.Enabled = false;
                 btnPedra.Enabled = false;
                 btnTesoura.Enabled = false;
                 btnConfirma.Enabled = false;
+                tmResultado.Enabled = false;
             }
             if(result.confirmado == 2)
             {
@@ -215,7 +221,7 @@ namespace JokenpoHttp
                     }
                     if (result.player2 == "papel")
                     {
-                        jp2 = Properties.Resources.pedraop;
+                        jp2 = Properties.Resources.papelop;
                         pbPlayer2.SizeMode = PictureBoxSizeMode.StretchImage;
                         pbPlayer2.Image = jp2;
                     }
@@ -237,7 +243,7 @@ namespace JokenpoHttp
                     }
                     if (result.player1 == "papel")
                     {
-                        jp1 = Properties.Resources.pedra;
+                        jp1 = Properties.Resources.papel;
                         pbPlayer1.SizeMode = PictureBoxSizeMode.StretchImage;
                         pbPlayer1.Image = jp1;
                     }
@@ -255,7 +261,7 @@ namespace JokenpoHttp
                 {
                     lblResultado.Text = "Empate. Aguarde para jogar novamente";
                 }
-                putHttp("","",3);
+                putHttp("-","-",3);
             }
         }
         public int checarResultado(Jogo resul)
