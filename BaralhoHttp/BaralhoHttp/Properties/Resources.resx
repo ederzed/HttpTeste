@@ -118,7 +118,163 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="7 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="9 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\9 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="card-game-48983_960_720" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\card-game-48983_960_720.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="7 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="valete de ouros" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\valete de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dama de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dama de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rei de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rei de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="10 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\10 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="7 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="valete de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\valete de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="9 de espadas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\9 de espadas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="10 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\10 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rei de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rei de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dama de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dama de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="10 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\10 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="9 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\9 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rei de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rei de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="8 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\8 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="8 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\8 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="7 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="valete de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\valete de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="valete de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\valete de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="8 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\8 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="9 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\9 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="8 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\8 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dama de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dama de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rei de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rei de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dama de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dama de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="10 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\10 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6 de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6 de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6 de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6 de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6 de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6 de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6 de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6 de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="As de copas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\As de copas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="As de espada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\As de espada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="As de ouro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\As de ouro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="As de paus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\As de paus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

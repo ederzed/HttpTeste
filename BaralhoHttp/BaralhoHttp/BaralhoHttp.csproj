@@ -82,5 +82,161 @@
   <ItemGroup>
     <None Include="Resources\card-game-48983_960_720.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9 de espadas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dama de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dama de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dama de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dama de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rei de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rei de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rei de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rei de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valete de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valete de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valete de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valete de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6 de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6 de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6 de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6 de paus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\As de copas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\As de espada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\As de ouro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\As de paus.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
