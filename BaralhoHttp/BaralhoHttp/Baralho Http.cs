@@ -5,9 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace BaralhoHttp
 {
@@ -27,15 +29,120 @@ namespace BaralhoHttp
             pbJogada1.SizeMode = PictureBoxSizeMode.StretchImage;
             pbJogada2.SizeMode = PictureBoxSizeMode.StretchImage;
         }
+        
 
         public Deck deck = new Deck();
-        Image j1 = null;
-        Image j2 = null;
-        Carta jog1;
-        Carta jog2;
-        Carta defineManilia;
-        List<Carta> maos;
-        int manilha = 0;
+        public Dados dados = new Dados();
+        public Image j1 = null;
+        public Image j2 = null;
+        public Carta jog1;
+        public Carta jog2;
+        public Carta defineManilia;
+        public List<Carta> maos;
+        public String linkBaralho = "https://api.myjson.com/bins/1412o2";
+        public String linkDados = "https://api.myjson.com/bins/macua";
+        public string jogador = "";
+
+        public void putBaralhoHttp(Deck d)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkBaralho);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "PUT";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                
+                string json = JsonConvert.SerializeObject(d);
+
+                streamWriter.Write(json);
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var responseText = streamReader.ReadToEnd();
+
+            }
+        }
+
+        public Deck getBaralhoHttp()
+        {
+            var requisicaoWeb = WebRequest.CreateHttp(linkBaralho);
+            requisicaoWeb.Method = "GET";
+            requisicaoWeb.UserAgent = "RequisicaoWebDemo";
+
+            using (var resposta = requisicaoWeb.GetResponse())
+            {
+                var streamDados = resposta.GetResponseStream();
+                StreamReader reader = new StreamReader(streamDados);
+                object objResponse = reader.ReadToEnd();
+
+                Deck d = JsonConvert.DeserializeObject<Deck>(objResponse.ToString());
+
+
+
+                streamDados.Close();
+                resposta.Close();
+
+                return d;
+            }
+
+        }
+
+        public void putDadosHttp(string jN, string jS, string jL, string jO, string mani, int ponH, int ponV, int valor)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkDados);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "PUT";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                Dados d = new Dados()
+                {
+                    jogadorN = jN,
+                    jogadorS = jS,
+                    jogadorL = jL,
+                    jogadorO = jO,
+                    manilha = mani,
+                    pontosH = ponH,
+                    pontosV = ponV,
+                    valorRodada = valor
+                };
+
+                string json = JsonConvert.SerializeObject(d);
+
+                streamWriter.Write(json);
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var responseText = streamReader.ReadToEnd();
+
+            }
+        }
+
+        public Dados getDadosHttp()
+        {
+            var requisicaoWeb = WebRequest.CreateHttp(linkDados);
+            requisicaoWeb.Method = "GET";
+            requisicaoWeb.UserAgent = "RequisicaoWebDemo";
+
+            using (var resposta = requisicaoWeb.GetResponse())
+            {
+                var streamDados = resposta.GetResponseStream();
+                StreamReader reader = new StreamReader(streamDados);
+                object objResponse = reader.ReadToEnd();
+
+                Dados d = JsonConvert.DeserializeObject<Dados>(objResponse.ToString());
+
+
+
+                streamDados.Close();
+                resposta.Close();
+
+                return d;
+            }
+
+        }
 
         public byte[] imgToByteArray(Image img)
         {
@@ -66,43 +173,20 @@ namespace BaralhoHttp
             if (imgToByteArray(pbCarta6.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
                 pbCarta6.Image = j2;
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            deck.Shuffle();
-            List<Carta> mao = deck.GoFish(6);
-            maos = mao;
-            List<string> teste = new List<string>();
-            for(int i = 0; i< mao.Count; i++)
-            {
-                teste.Add(mao[i].numero + " de " + mao[i].naipe);
-            }
-            String m = String.Join(";", teste);
-            MessageBox.Show(m);
-            defineManilia = deck.GoFish();
-            pbBaralho.Image = escolheCarta(defineManilia);
-            pbCarta1.Image = escolheCarta(mao[0]);
-            pbCarta2.Image = escolheCarta(mao[1]);
-            pbCarta3.Image = escolheCarta(mao[2]);
-            pbCarta4.Image = escolheCarta(mao[3]);
-            pbCarta5.Image = escolheCarta(mao[4]);
-            pbCarta6.Image = escolheCarta(mao[5]);
-        }
-
         public Image escolheCarta(Carta c)
         {
             Image[] imagens = { Properties.Resources.As_de_ouro, Properties.Resources._2_de_ouro, Properties.Resources._3_de_ouro,
             Properties.Resources._4_de_ouro,Properties.Resources._5_de_ouro,Properties.Resources._6_de_ouro,Properties.Resources._7_de_ouro,
-            Properties.Resources._8_de_ouro,Properties.Resources._9_de_ouro,Properties.Resources._10_de_ouro,Properties.Resources.dama_de_ouro,
+            Properties.Resources.dama_de_ouro,
             Properties.Resources.valete_de_ouros,Properties.Resources.rei_de_ouro,Properties.Resources.As_de_espada, Properties.Resources._2_de_espada, Properties.Resources._3_de_espada,
             Properties.Resources._4_de_espada,Properties.Resources._5_de_espada,Properties.Resources._6_de_espada,Properties.Resources._7_de_espada,
-            Properties.Resources._8_de_espada,Properties.Resources._9_de_espadas,Properties.Resources._10_de_espada,Properties.Resources.dama_de_espada,
+            Properties.Resources.dama_de_espada,
             Properties.Resources.valete_de_espada,Properties.Resources.rei_de_espada,Properties.Resources.As_de_copas, Properties.Resources._2_de_copas, Properties.Resources._3_de_copas,
             Properties.Resources._4_de_copas,Properties.Resources._5_de_copas,Properties.Resources._6_de_copas,Properties.Resources._7_de_copas,
-            Properties.Resources._8_de_copas,Properties.Resources._9_de_copas,Properties.Resources._10_de_copas,Properties.Resources.dama_de_copas,
+            Properties.Resources.dama_de_copas,
             Properties.Resources.valete_de_copas,Properties.Resources.rei_de_copas,Properties.Resources.As_de_paus, Properties.Resources._2_de_paus, Properties.Resources._3_de_paus,
             Properties.Resources._4_de_paus,Properties.Resources._5_de_paus,Properties.Resources._6_de_paus,Properties.Resources._7_de_paus,
-            Properties.Resources._8_de_paus,Properties.Resources._9_de_paus,Properties.Resources._10_de_paus,Properties.Resources.dama_de_paus,
+            Properties.Resources.dama_de_paus,
             Properties.Resources.valete_de_paus,Properties.Resources.rei_de_paus};
             int nai = 0;
             int num = 0;
@@ -116,12 +200,12 @@ namespace BaralhoHttp
                 if (c.numero == "Ás")
                     num = 1;
                 if (c.numero == "Rei")
-                    num = 13;
+                    num = 10;
                 if (c.numero == "Dama")
-                    num = 11;
+                    num = 8;
                 if (c.numero == "Valete")
-                    num = 12;
-                    
+                    num = 9;
+
             }
 
             if (c.naipe == "Ouro")
@@ -132,25 +216,29 @@ namespace BaralhoHttp
                 nai = 2;
             if (c.naipe == "Paus")
                 nai = 3;
-       
 
 
-            return imagens[(num + (nai*13)) - 1];
+
+            return imagens[(num + (nai * 10)) - 1];
         }
 
-        public string verVencedor(Carta j1,Carta j2, Carta manilha)
+        public string verVencedor(Carta j1, Carta j2, Carta manilha)
         {
             // 4 - 7 ,Q ,J ,K ,A ,2 ,3
             int c1 = valorReal(j1, manilha);
             int c2 = valorReal(j2, manilha);
             int[] cartasEmJogo = { c1, c2 };
             Array.Sort(cartasEmJogo);
-            if (cartasEmJogo[cartasEmJogo.Length -1] == c1)
+            if (cartasEmJogo[cartasEmJogo.Length - 1] == cartasEmJogo[cartasEmJogo.Length - 2])
+                return "Amarrou";
+
+            if (cartasEmJogo[cartasEmJogo.Length - 1] == c1)
                 return "Jogador Sul Venceu";
             else if (cartasEmJogo[cartasEmJogo.Length - 1] == c2)
                 return "Jogador Norte Venceu";
             else
-                return "Amarrou";
+                return "Erro!";
+
         }
         public int valorReal(Carta carta, Carta mani)
         {
@@ -159,28 +247,28 @@ namespace BaralhoHttp
             try
             {
                 if (carta.numero == "2")
-                    valor = 15;
+                    valor = 12;
                 else if (carta.numero == "3")
-                    valor = 16;
+                    valor = 13;
                 else
                     valor = Convert.ToInt32(carta.numero);
             }
             catch
             {
                 if (carta.numero == "Ás")
-                    valor = 14;
-                if (carta.numero == "Rei")
-                    valor = 13;
-                if (carta.numero == "Dama")
                     valor = 11;
+                if (carta.numero == "Rei")
+                    valor = 10;
+                if (carta.numero == "Dama")
+                    valor = 8;
                 if (carta.numero == "Valete")
-                    valor = 12;
+                    valor = 9;
 
             }
             try
             {
                 if (mani.numero == "2")
-                    manilhona = 16;
+                    manilhona = 13;
                 else if (mani.numero == "3")
                     manilhona = 4;
                 else
@@ -189,13 +277,13 @@ namespace BaralhoHttp
             catch
             {
                 if (mani.numero == "Ás")
-                    manilhona = 15;
-                if (mani.numero == "Rei")
-                    manilhona = 14;
-                if (mani.numero == "Dama")
                     manilhona = 12;
+                if (mani.numero == "Rei")
+                    manilhona = 11;
+                if (mani.numero == "Dama")
+                    manilhona = 9;
                 if (mani.numero == "Valete")
-                    manilhona = 13;
+                    manilhona = 10;
 
             }
             if (valor == manilhona)
@@ -211,9 +299,45 @@ namespace BaralhoHttp
                 else if (carta.naipe == "Paus")
                     valor = 9999;
             }
-                
+
             return valor;
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            conectar();
+            // LEMBRE -SE: cartaToString(Carta c), stringToCarta(string c)
+            deck = new Deck();
+            deck.Shuffle();
+            List<Carta> mao = deck.GoFish(3);
+            maos = mao;
+            List<string> teste = new List<string>();
+            for(int i = 0; i< mao.Count; i++)
+            {
+                teste.Add(mao[i].numero + " de " + mao[i].naipe);
+            }
+            String m = String.Join(";", teste);
+            MessageBox.Show(m);
+            defineManilia = deck.GoFish();
+            putBaralhoHttp(deck);
+            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+            pbBaralho.Image = escolheCarta(defineManilia);
+            if(jogador == "S")
+            {
+                pbCarta1.Image = escolheCarta(mao[0]);
+                pbCarta2.Image = escolheCarta(mao[1]);
+                pbCarta3.Image = escolheCarta(mao[2]);
+            }
+            if (jogador == "N")
+            {
+                pbCarta4.Image = escolheCarta(mao[0]);
+                pbCarta5.Image = escolheCarta(mao[1]);
+                pbCarta6.Image = escolheCarta(mao[2]);
+            }
+            
+        }
+
+       
         private void pbCarta1_Click(object sender, EventArgs e)
         {
             pbJogada1.Image = pbCarta1.Image;
@@ -285,6 +409,18 @@ namespace BaralhoHttp
         public string naipe { get; set; }
         public string numero { get; set; }
     }
+    public class Dados
+    {
+        public string jogadorN { get; set; }
+        public string jogadorS { get; set; }
+        public string jogadorL { get; set; }
+        public string jogadorO { get; set; }
+        public string manilha { get; set; }
+        public int pontosH { get; set; }
+        public int pontosV { get; set; }
+        public int valorRodada { get; set; }
+
+    }
     public class Deck
     {
         public List<Carta> DeckOfCartas { get; set; }
@@ -292,7 +428,7 @@ namespace BaralhoHttp
         public Deck()
         {
             List<Carta> deckOfCartas_ = new List<Carta>();
-            string[] numbers = new string[] { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valete", "Dama", "Rei", "Ás" };
+            string[] numbers = new string[] { "2", "3", "4", "5", "6", "7", "Valete", "Dama", "Rei", "Ás" };
             string[] suits = new string[] { "Espada", "Ouro", "Copas", "Paus" };
             foreach (string suit in suits)
             {
