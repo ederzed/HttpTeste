@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,12 +29,49 @@ namespace BaralhoHttp
         }
 
         public Deck deck = new Deck();
-        Image j1;
-        Image j2;
+        Image j1 = null;
+        Image j2 = null;
+        Carta jog1;
+        Carta jog2;
+        Carta defineManilia;
+        List<Carta> maos;
+        int manilha = 0;
+
+        public byte[] imgToByteArray(Image img)
+        {
+            using (MemoryStream mStream = new MemoryStream())
+            {
+                img.Save(mStream, img.RawFormat);
+                return mStream.ToArray();
+            }
+        }
+
+        public void reporCarta1()
+        {
+            if (imgToByteArray(pbCarta1.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta1.Image = j1;
+            if (imgToByteArray(pbCarta2.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta2.Image = j1;
+            if (imgToByteArray(pbCarta3.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta3.Image = j1;
+            
+
+        }
+        public void reporCarta2()
+        {
+            if (imgToByteArray(pbCarta4.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta4.Image = j2;
+            if (imgToByteArray(pbCarta5.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta5.Image = j2;
+            if (imgToByteArray(pbCarta6.Image).SequenceEqual(imgToByteArray(Properties.Resources.card_game_48983_960_720)))
+                pbCarta6.Image = j2;
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             deck.Shuffle();
             List<Carta> mao = deck.GoFish(6);
+            maos = mao;
             List<string> teste = new List<string>();
             for(int i = 0; i< mao.Count; i++)
             {
@@ -41,6 +79,8 @@ namespace BaralhoHttp
             }
             String m = String.Join(";", teste);
             MessageBox.Show(m);
+            defineManilia = deck.GoFish();
+            pbBaralho.Image = escolheCarta(defineManilia);
             pbCarta1.Image = escolheCarta(mao[0]);
             pbCarta2.Image = escolheCarta(mao[1]);
             pbCarta3.Image = escolheCarta(mao[2]);
@@ -86,7 +126,7 @@ namespace BaralhoHttp
 
             if (c.naipe == "Ouro")
                 nai = 0;
-            if (c.naipe == "Espadas")
+            if (c.naipe == "Espada")
                 nai = 1;
             if (c.naipe == "Copas")
                 nai = 2;
@@ -96,6 +136,146 @@ namespace BaralhoHttp
 
 
             return imagens[(num + (nai*13)) - 1];
+        }
+
+        public string verVencedor(Carta j1,Carta j2, Carta manilha)
+        {
+            // 4 - 7 ,Q ,J ,K ,A ,2 ,3
+            int c1 = valorReal(j1, manilha);
+            int c2 = valorReal(j2, manilha);
+            int[] cartasEmJogo = { c1, c2 };
+            Array.Sort(cartasEmJogo);
+            if (cartasEmJogo[cartasEmJogo.Length -1] == c1)
+                return "Jogador Sul Venceu";
+            else if (cartasEmJogo[cartasEmJogo.Length - 1] == c2)
+                return "Jogador Norte Venceu";
+            else
+                return "Amarrou";
+        }
+        public int valorReal(Carta carta, Carta mani)
+        {
+            int valor = 0;
+            int manilhona = 0;
+            try
+            {
+                if (carta.numero == "2")
+                    valor = 15;
+                else if (carta.numero == "3")
+                    valor = 16;
+                else
+                    valor = Convert.ToInt32(carta.numero);
+            }
+            catch
+            {
+                if (carta.numero == "Ás")
+                    valor = 14;
+                if (carta.numero == "Rei")
+                    valor = 13;
+                if (carta.numero == "Dama")
+                    valor = 11;
+                if (carta.numero == "Valete")
+                    valor = 12;
+
+            }
+            try
+            {
+                if (mani.numero == "2")
+                    manilhona = 16;
+                else if (mani.numero == "3")
+                    manilhona = 4;
+                else
+                    manilhona = Convert.ToInt32(mani.numero) + 1;
+            }
+            catch
+            {
+                if (mani.numero == "Ás")
+                    manilhona = 15;
+                if (mani.numero == "Rei")
+                    manilhona = 14;
+                if (mani.numero == "Dama")
+                    manilhona = 12;
+                if (mani.numero == "Valete")
+                    manilhona = 13;
+
+            }
+            if (valor == manilhona)
+            {
+                valor += 100;
+
+                if (carta.naipe == "Ouro")
+                    valor++;
+                else if (carta.naipe == "Espada")
+                    valor += 2;
+                else if (carta.naipe == "Copas")
+                    valor += 3;
+                else if (carta.naipe == "Paus")
+                    valor = 9999;
+            }
+                
+            return valor;
+        }
+        private void pbCarta1_Click(object sender, EventArgs e)
+        {
+            pbJogada1.Image = pbCarta1.Image;
+            reporCarta1();
+            pbCarta1.Image = Properties.Resources.card_game_48983_960_720;
+            jog1 = maos[0];
+            j1 = pbJogada1.Image;
+        }
+
+        private void pbCarta2_Click(object sender, EventArgs e)
+        {
+            pbJogada1.Image = pbCarta2.Image;
+            reporCarta1();
+            pbCarta2.Image = Properties.Resources.card_game_48983_960_720;
+            jog1 = maos[1];
+            j1 = pbJogada1.Image;
+        }
+
+        private void pbCarta3_Click(object sender, EventArgs e)
+        {
+            pbJogada1.Image = pbCarta3.Image;
+            reporCarta1();
+            pbCarta3.Image = Properties.Resources.card_game_48983_960_720;
+            jog1 = maos[2];
+            j1 = pbJogada1.Image;
+        }
+
+       
+
+        private void pbCarta4_Click(object sender, EventArgs e)
+        {
+            pbJogada2.Image = pbCarta4.Image;
+            reporCarta2();
+            pbCarta4.Image = Properties.Resources.card_game_48983_960_720;
+            jog2 = maos[3];
+            j2 = pbJogada2.Image;
+        }
+
+        private void pbCarta5_Click(object sender, EventArgs e)
+        {
+            pbJogada2.Image = pbCarta5.Image;
+            reporCarta2();
+            pbCarta5.Image = Properties.Resources.card_game_48983_960_720;
+            jog2 = maos[4];
+            j2 = pbJogada2.Image;
+        }
+
+        private void pbCarta6_Click(object sender, EventArgs e)
+        {
+            pbJogada2.Image = pbCarta6.Image;
+            reporCarta2();
+            pbCarta6.Image = Properties.Resources.card_game_48983_960_720;
+            jog2 = maos[5];
+            j2 = pbJogada2.Image;
+        }
+
+        private void tmrResultado_Tick(object sender, EventArgs e)
+        {
+            if(j2 != null && j1 != null)
+            {
+                lblResultado.Text = verVencedor(jog1,jog2,defineManilia);
+            } 
         }
     }
 
