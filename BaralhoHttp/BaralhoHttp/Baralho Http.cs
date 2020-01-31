@@ -29,8 +29,8 @@ namespace BaralhoHttp
             pbJogada1.SizeMode = PictureBoxSizeMode.StretchImage;
             pbJogada2.SizeMode = PictureBoxSizeMode.StretchImage;
         }
-        
 
+        Jogador jooj = new Jogador();
         public Deck deck = new Deck();
         public Dados dados = new Dados();
         public Image j1 = null;
@@ -41,8 +41,7 @@ namespace BaralhoHttp
         public List<Carta> maos;
         public String linkBaralho = "https://api.myjson.com/bins/1412o2";
         public String linkDados = "https://api.myjson.com/bins/macua";
-        public string jogador = "";
-
+        
         public void putBaralhoHttp(Deck d)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkBaralho);
@@ -143,7 +142,51 @@ namespace BaralhoHttp
             }
 
         }
+        public void conectar()
+        {
+            Dados data = getDadosHttp();
+            if(data.jogadorS == "-")
+            {
+                jooj.setJogador("S-Vira");
+                putDadosHttp(data.jogadorN, "Conectado", data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                lblResultado.Text = "Conectado como jogador Sul";
+            }
+            else if(data.jogadorN == "-")
+            {
+                jooj.setJogador("N");
+                putDadosHttp("Conectado", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                lblResultado.Text = "Conectado como jogador Norte";
+            }
+            else if (data.jogadorL == "-")
+            {
+                jooj.setJogador("L");
+                putDadosHttp(data.jogadorN, data.jogadorS, "Conectado", data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                lblResultado.Text = "Conectado como jogador Leste";
+            }
+            else if (data.jogadorO == "-")
+            {
+                jooj.setJogador("O");
+                putDadosHttp(data.jogadorN, data.jogadorS, data.jogadorL, "Conectado", data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                lblResultado.Text = "Conectado como jogador Oeste";
+            }
+        }
 
+        public string cartaToString(Carta c)
+        {
+            string val = c.numero + "/" + c.naipe;
+
+            return val;
+        }
+        public Carta stringToCarta(string c)
+        {
+            string[] icon = c.Split('/');
+            Carta val = new Carta()
+            {
+                numero = icon[0],
+                naipe = icon[1]
+            };
+            return val;
+        }
         public byte[] imgToByteArray(Image img)
         {
             using (MemoryStream mStream = new MemoryStream())
@@ -307,7 +350,11 @@ namespace BaralhoHttp
         {
             conectar();
             // LEMBRE -SE: cartaToString(Carta c), stringToCarta(string c)
-            deck = new Deck();
+            if (jooj.getJogador().EndsWith("Vira"))
+                deck = new Deck();
+            else
+                deck = getBaralhoHttp();
+
             deck.Shuffle();
             List<Carta> mao = deck.GoFish(3);
             maos = mao;
@@ -322,13 +369,13 @@ namespace BaralhoHttp
             putBaralhoHttp(deck);
             //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
             pbBaralho.Image = escolheCarta(defineManilia);
-            if(jogador == "S")
+            if(jooj.getJogador().StartsWith("S"))
             {
                 pbCarta1.Image = escolheCarta(mao[0]);
                 pbCarta2.Image = escolheCarta(mao[1]);
                 pbCarta3.Image = escolheCarta(mao[2]);
             }
-            if (jogador == "N")
+            if (jooj.getJogador().StartsWith("N"))
             {
                 pbCarta4.Image = escolheCarta(mao[0]);
                 pbCarta5.Image = escolheCarta(mao[1]);
@@ -403,6 +450,20 @@ namespace BaralhoHttp
         }
     }
 
+    public class Jogador
+    {
+        public static string jogador = "";
+        public string getJogador()
+        {
+            return jogador;
+        }
+        public void setJogador(string val)
+        {
+            jogador = val;
+        }
+
+        
+    }
     public class Carta
     {
        
@@ -424,20 +485,23 @@ namespace BaralhoHttp
     public class Deck
     {
         public List<Carta> DeckOfCartas { get; set; }
-
+        
+       
         public Deck()
         {
             List<Carta> deckOfCartas_ = new List<Carta>();
-            string[] numbers = new string[] { "2", "3", "4", "5", "6", "7", "Valete", "Dama", "Rei", "Ás" };
-            string[] suits = new string[] { "Espada", "Ouro", "Copas", "Paus" };
-            foreach (string suit in suits)
-            {
-                foreach (string number in numbers)
+          
+                string[] numbers = new string[] { "2", "3", "4", "5", "6", "7", "Valete", "Dama", "Rei", "Ás" };
+                string[] suits = new string[] { "Espada", "Ouro", "Copas", "Paus" };
+                foreach (string suit in suits)
                 {
-                    Carta c = new Carta() { naipe = suit, numero = number };
-                    deckOfCartas_.Add(c);
+                    foreach (string number in numbers)
+                    {
+                        Carta c = new Carta() { naipe = suit, numero = number };
+                        deckOfCartas_.Add(c);
+                    }
                 }
-            }
+             
             DeckOfCartas = deckOfCartas_;
         }
 
