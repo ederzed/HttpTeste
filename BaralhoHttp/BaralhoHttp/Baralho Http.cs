@@ -36,6 +36,7 @@ namespace BaralhoHttp
 
 
         Jogador jooj = new Jogador();
+        
         public Deck deck = new Deck();
         public Dados dados = new Dados();
         public Image j1 = null;
@@ -46,7 +47,7 @@ namespace BaralhoHttp
         public List<Carta> maos;
         public String linkBaralho = "https://api.myjson.com/bins/1412o2";
         public String linkDados = "https://api.myjson.com/bins/macua";
-
+        public List<Carta> segj;
 
 
 
@@ -65,12 +66,12 @@ namespace BaralhoHttp
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkBaralho);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "PUT";
-
+            
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 
                 string json = JsonConvert.SerializeObject(d);
-
+                
                 streamWriter.Write(json);
             }
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
@@ -380,7 +381,7 @@ namespace BaralhoHttp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           // putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
             //putBaralhoHttp(deck);
             conectar();
             dados = getDadosHttp();
@@ -390,9 +391,16 @@ namespace BaralhoHttp
                 deck.Shuffle();
                 defineManilia = deck.GoFish();
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, cartaToString(defineManilia), dados.pontosH, dados.pontosV, dados.valorRodada);
-            }  
+            }
             else
+            {
                 deck = getBaralhoHttp();
+
+                defineManilia = stringToCarta(dados.manilha);
+            }
+
+
+
 
             deck.Shuffle();
             List<Carta> mao = deck.GoFish(3);
@@ -519,18 +527,26 @@ namespace BaralhoHttp
             if(e.KeyCode == Keys.R)
             {
                 putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+                deck = new Deck();
+                putBaralhoHttp(deck);
             }
+
         }
 
         private void BaralhoHttp_Deactivate(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void BaralhoHttp_FormClosed(object sender, FormClosedEventArgs e)
         {
             Dados data = getDadosHttp();
             Jogador j = new Jogador();
             if (j.getJogador().StartsWith("N"))
             {
-                
+
                 putDadosHttp("-", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
-                
+
             }
             else if (j.getJogador().StartsWith("S"))
             {
@@ -614,7 +630,7 @@ namespace BaralhoHttp
     public class Deck
     {
         public List<Carta> DeckOfCartas { get; set; }
-        
+        Jogador j = new Jogador();
        
         public Deck()
         {
@@ -630,8 +646,12 @@ namespace BaralhoHttp
                         deckOfCartas_.Add(c);
                     }
                 }
-             
-            DeckOfCartas = deckOfCartas_;
+            if (j.getJogador().EndsWith("Vira"))
+            {
+                DeckOfCartas = deckOfCartas_;
+            }
+            else { }
+            
         }
 
         public void Shuffle()

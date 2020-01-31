@@ -203,6 +203,7 @@
             this.Name = "BaralhoHttp";
             this.Text = "Baralho Http";
             this.Deactivate += new System.EventHandler(this.BaralhoHttp_Deactivate);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BaralhoHttp_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BaralhoHttp_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbCarta3)).EndInit();
