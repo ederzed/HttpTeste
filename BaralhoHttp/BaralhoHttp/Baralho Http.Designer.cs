@@ -55,6 +55,7 @@
             // 
             this.pbCarta3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta3.Enabled = false;
             this.pbCarta3.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta3.ImageLocation = "";
             this.pbCarta3.Location = new System.Drawing.Point(429, 367);
@@ -68,6 +69,7 @@
             // 
             this.pbCarta2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta2.Enabled = false;
             this.pbCarta2.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta2.ImageLocation = "";
             this.pbCarta2.Location = new System.Drawing.Point(370, 367);
@@ -81,6 +83,7 @@
             // 
             this.pbCarta1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta1.Enabled = false;
             this.pbCarta1.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta1.ImageLocation = "";
             this.pbCarta1.Location = new System.Drawing.Point(311, 367);
@@ -106,6 +109,7 @@
             // 
             this.pbCarta6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta6.Enabled = false;
             this.pbCarta6.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta6.ImageLocation = "";
             this.pbCarta6.Location = new System.Drawing.Point(429, 12);
@@ -119,6 +123,7 @@
             // 
             this.pbCarta5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta5.Enabled = false;
             this.pbCarta5.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta5.ImageLocation = "";
             this.pbCarta5.Location = new System.Drawing.Point(370, 12);
@@ -132,6 +137,7 @@
             // 
             this.pbCarta4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCarta4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCarta4.Enabled = false;
             this.pbCarta4.Image = global::BaralhoHttp.Properties.Resources.card_game_48983_960_720;
             this.pbCarta4.ImageLocation = "";
             this.pbCarta4.Location = new System.Drawing.Point(311, 12);
@@ -197,6 +203,7 @@
             this.Name = "BaralhoHttp";
             this.Text = "Baralho Http";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BaralhoHttp_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbCarta3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCarta2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCarta1)).EndInit();

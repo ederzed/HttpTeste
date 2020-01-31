@@ -30,6 +30,11 @@ namespace BaralhoHttp
             pbJogada2.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
+
+
+
+
+
         Jogador jooj = new Jogador();
         public Deck deck = new Deck();
         public Dados dados = new Dados();
@@ -41,6 +46,19 @@ namespace BaralhoHttp
         public List<Carta> maos;
         public String linkBaralho = "https://api.myjson.com/bins/1412o2";
         public String linkDados = "https://api.myjson.com/bins/macua";
+
+
+
+
+
+
+        //SÓ MÉTODOS
+
+
+
+
+
+
         
         public void putBaralhoHttp(Deck d)
         {
@@ -346,40 +364,65 @@ namespace BaralhoHttp
             return valor;
         }
 
+
+
+
+
+
+
+        // EVENTOS DO FORM
+
+
+
+
+
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             conectar();
-            // LEMBRE -SE: cartaToString(Carta c), stringToCarta(string c)
+           
             if (jooj.getJogador().EndsWith("Vira"))
+            {
                 deck = new Deck();
+                defineManilia = deck.GoFish();
+            }  
             else
                 deck = getBaralhoHttp();
 
             deck.Shuffle();
             List<Carta> mao = deck.GoFish(3);
             maos = mao;
-            List<string> teste = new List<string>();
-            for(int i = 0; i< mao.Count; i++)
-            {
-                teste.Add(mao[i].numero + " de " + mao[i].naipe);
-            }
-            String m = String.Join(";", teste);
-            MessageBox.Show(m);
-            defineManilia = deck.GoFish();
+
+            // CHECAR SE AS CARTAS E AS IMGS BATEM
+            //List<string> teste = new List<string>();
+            //for(int i = 0; i< mao.Count; i++)
+            //{
+            //    teste.Add(mao[i].numero + " de " + mao[i].naipe);
+            //}
+            //String m = String.Join(";", teste);
+            //MessageBox.Show(m);
+            
             putBaralhoHttp(deck);
-            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+            
             pbBaralho.Image = escolheCarta(defineManilia);
             if(jooj.getJogador().StartsWith("S"))
             {
                 pbCarta1.Image = escolheCarta(mao[0]);
                 pbCarta2.Image = escolheCarta(mao[1]);
                 pbCarta3.Image = escolheCarta(mao[2]);
+                pbCarta1.Enabled = true;
+                pbCarta2.Enabled = true;
+                pbCarta3.Enabled = true;
             }
             if (jooj.getJogador().StartsWith("N"))
             {
                 pbCarta4.Image = escolheCarta(mao[0]);
                 pbCarta5.Image = escolheCarta(mao[1]);
                 pbCarta6.Image = escolheCarta(mao[2]);
+                pbCarta4.Enabled = true;
+                pbCarta5.Enabled = true;
+                pbCarta6.Enabled = true;
             }
             
         }
@@ -391,6 +434,7 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta1.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[0];
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j1 = pbJogada1.Image;
         }
 
@@ -400,6 +444,7 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta2.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[1];
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j1 = pbJogada1.Image;
         }
 
@@ -409,6 +454,7 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta3.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[2];
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j1 = pbJogada1.Image;
         }
 
@@ -419,7 +465,8 @@ namespace BaralhoHttp
             pbJogada2.Image = pbCarta4.Image;
             reporCarta2();
             pbCarta4.Image = Properties.Resources.card_game_48983_960_720;
-            jog2 = maos[3];
+            jog2 = maos[0];
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j2 = pbJogada2.Image;
         }
 
@@ -428,7 +475,8 @@ namespace BaralhoHttp
             pbJogada2.Image = pbCarta5.Image;
             reporCarta2();
             pbCarta5.Image = Properties.Resources.card_game_48983_960_720;
-            jog2 = maos[4];
+            jog2 = maos[1];
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j2 = pbJogada2.Image;
         }
 
@@ -437,7 +485,8 @@ namespace BaralhoHttp
             pbJogada2.Image = pbCarta6.Image;
             reporCarta2();
             pbCarta6.Image = Properties.Resources.card_game_48983_960_720;
-            jog2 = maos[5];
+            jog2 = maos[2];
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
             j2 = pbJogada2.Image;
         }
 
@@ -448,7 +497,41 @@ namespace BaralhoHttp
                 lblResultado.Text = verVencedor(jog1,jog2,defineManilia);
             } 
         }
+
+        private void BaralhoHttp_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.R)
+            {
+                putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+            }
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // OUTRAS CLASSES
+
+
+
+
+
+
+
+
+
+
+
+
 
     public class Jogador
     {
