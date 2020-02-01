@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace BaralhoHttp
 {
-   
+   //LEMBRETE: TENTAR COLOCAR O Nº DE CARTAS JOGADAS NO SERVER AO INVES DE POR VARIAVEL LOCAL 
     public partial class BaralhoHttp : Form
     {
         public BaralhoHttp()
@@ -28,6 +28,8 @@ namespace BaralhoHttp
             pbCarta6.SizeMode = PictureBoxSizeMode.StretchImage;
             pbJogada1.SizeMode = PictureBoxSizeMode.StretchImage;
             pbJogada2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbVitoria1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbVitoria2.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         // VARIAVEIS
@@ -36,7 +38,7 @@ namespace BaralhoHttp
 
 
         Jogador jooj = new Jogador();
-        
+        Confirma confirm = new Confirma();
         public Deck deck = new Deck();
         public Dados dados = new Dados();
         public Image j1 = null;
@@ -47,8 +49,8 @@ namespace BaralhoHttp
         public List<Carta> maos;
         public String linkBaralho = "https://api.myjson.com/bins/1412o2";
         public String linkDados = "https://api.myjson.com/bins/macua";
-        public List<Carta> segj;
-
+        public String linkConfirmacao = "http://api.myjson.com/bins/1e9ep6";
+        
 
 
 
@@ -106,7 +108,7 @@ namespace BaralhoHttp
 
         }
 
-        public void putDadosHttp(string jN, string jS, string jL, string jO, string mani, int ponH, int ponV, int valor)
+        public void putDadosHttp(string jN, string jS, string jL, string jO, string mani, int ponH, int ponV, int valor, int nC)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkDados);
             httpWebRequest.ContentType = "application/json";
@@ -123,7 +125,8 @@ namespace BaralhoHttp
                     manilha = mani,
                     pontosH = ponH,
                     pontosV = ponV,
-                    valorRodada = valor
+                    valorRodada = valor,
+                    numeroCartasJogadas = nC
                 };
 
                 string json = JsonConvert.SerializeObject(d);
@@ -161,31 +164,80 @@ namespace BaralhoHttp
             }
 
         }
+
+        public void putConfirmasHttp(int co)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(linkConfirmacao);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "PUT";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                Confirma c = new Confirma()
+                {
+                    confirma = co,
+                };
+
+                string json = JsonConvert.SerializeObject(c);
+
+                streamWriter.Write(json);
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var responseText = streamReader.ReadToEnd();
+
+            }
+        }
+
+        public Confirma getConfirmaHttp()
+        {
+            var requisicaoWeb = WebRequest.CreateHttp(linkConfirmacao);
+            requisicaoWeb.Method = "GET";
+            requisicaoWeb.UserAgent = "RequisicaoWebDemo";
+
+            using (var resposta = requisicaoWeb.GetResponse())
+            {
+                var streamDados = resposta.GetResponseStream();
+                StreamReader reader = new StreamReader(streamDados);
+                object objResponse = reader.ReadToEnd();
+
+                Confirma c = JsonConvert.DeserializeObject<Confirma>(objResponse.ToString());
+
+
+
+                streamDados.Close();
+                resposta.Close();
+
+                return c;
+            }
+
+        }
         public void conectar()
         {
             Dados data = getDadosHttp();
             if(data.jogadorS == "-")
             {
                 jooj.setJogador("S-Vira");
-                putDadosHttp(data.jogadorN, "Conectado", data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, "Conectado", data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
                 lblResultado.Text = "Conectado como jogador Sul";
             }
             else if(data.jogadorN == "-")
             {
                 jooj.setJogador("N");
-                putDadosHttp("Conectado", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp("Conectado", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
                 lblResultado.Text = "Conectado como jogador Norte";
             }
             else if (data.jogadorL == "-")
             {
                 jooj.setJogador("L");
-                putDadosHttp(data.jogadorN, data.jogadorS, "Conectado", data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, data.jogadorS, "Conectado", data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
                 lblResultado.Text = "Conectado como jogador Leste";
             }
             else if (data.jogadorO == "-")
             {
                 jooj.setJogador("O");
-                putDadosHttp(data.jogadorN, data.jogadorS, data.jogadorL, "Conectado", data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, data.jogadorS, data.jogadorL, "Conectado", data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
                 lblResultado.Text = "Conectado como jogador Oeste";
             }
         }
@@ -290,16 +342,29 @@ namespace BaralhoHttp
             int c1 = valorReal(j1, manilha);
             int c2 = valorReal(j2, manilha);
             int[] cartasEmJogo = { c1, c2 };
+            pbVitoria1.Image = null;
+            pbVitoria2.Image = null;
             Array.Sort(cartasEmJogo);
             if (cartasEmJogo[cartasEmJogo.Length - 1] == cartasEmJogo[cartasEmJogo.Length - 2])
                 return "Amarrou";
 
             if (cartasEmJogo[cartasEmJogo.Length - 1] == c1)
+            {
+                pbVitoria1.Image = Properties.Resources.star;
                 return "Jogador Sul Venceu";
+            }
+               
             else if (cartasEmJogo[cartasEmJogo.Length - 1] == c2)
+            {
+                pbVitoria2.Image = Properties.Resources.star;
                 return "Jogador Norte Venceu";
+            }
+
             else
+            {
                 return "Erro!";
+            }
+                
 
         }
         public int valorReal(Carta carta, Carta mani)
@@ -365,8 +430,73 @@ namespace BaralhoHttp
             return valor;
         }
 
+        public void novaRodada()
+        {
+            dados = getDadosHttp();
+            if (jooj.getJogador().EndsWith("Vira"))
+            {
+                deck = new Deck();
+                deck.Shuffle();
+                defineManilia = deck.GoFish();
+                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, cartaToString(defineManilia), dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas);
+                deck.Shuffle();
+                List<Carta> mao = deck.GoFish(3);
+                maos = mao;
+                
+
+                putBaralhoHttp(deck);
+
+                pbBaralho.Image = escolheCarta(defineManilia);
+                if (jooj.getJogador().StartsWith("S"))
+                {
+                    pbCarta1.Image = escolheCarta(mao[0]);
+                    pbCarta2.Image = escolheCarta(mao[1]);
+                    pbCarta3.Image = escolheCarta(mao[2]);
+                    pbCarta1.Enabled = true;
+                    pbCarta2.Enabled = true;
+                    pbCarta3.Enabled = true;
+                }
+
+            }
+            else
+            {
+                do
+                {
+                    dados = getDadosHttp();
+                    if (getBaralhoHttp().DeckOfCartas.Count == 36)
+                        deck = getBaralhoHttp();
+                    else
+                        deck = null;
+                    defineManilia = stringToCarta(dados.manilha);
+
+                } while (deck == null);
+
+                deck.Shuffle();
+                List<Carta> mao = deck.GoFish(3);
+                maos = mao;
+
+               
+                putBaralhoHttp(deck);
+
+                pbBaralho.Image = escolheCarta(defineManilia);
+                if (jooj.getJogador().StartsWith("N"))
+                {
+                    pbCarta4.Image = escolheCarta(mao[0]);
+                    pbCarta5.Image = escolheCarta(mao[1]);
+                    pbCarta6.Image = escolheCarta(mao[2]);
+                    pbCarta4.Enabled = true;
+                    pbCarta5.Enabled = true;
+                    pbCarta6.Enabled = true;
+                }
+
+            }
+
+            
+            
 
 
+        }
+        
 
 
 
@@ -381,8 +511,9 @@ namespace BaralhoHttp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1, 0);
             //putBaralhoHttp(deck);
+            //putConfirmasHttp(0);
             conectar();
             dados = getDadosHttp();
             if (jooj.getJogador().EndsWith("Vira"))
@@ -390,7 +521,7 @@ namespace BaralhoHttp
                 deck = new Deck();
                 deck.Shuffle();
                 defineManilia = deck.GoFish();
-                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, cartaToString(defineManilia), dados.pontosH, dados.pontosV, dados.valorRodada);
+                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, cartaToString(defineManilia), dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas);
             }
             else
             {
@@ -447,8 +578,11 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta1.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[0];
-            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j1 = pbJogada1.Image;
+            pbCarta1.Enabled = false;
+            pbCarta2.Enabled = false;
+            pbCarta3.Enabled = false;
         }
 
         private void pbCarta2_Click(object sender, EventArgs e)
@@ -458,8 +592,11 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta2.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[1];
-            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j1 = pbJogada1.Image;
+            pbCarta1.Enabled = false;
+            pbCarta2.Enabled = false;
+            pbCarta3.Enabled = false;
         }
 
         private void pbCarta3_Click(object sender, EventArgs e)
@@ -469,8 +606,11 @@ namespace BaralhoHttp
             reporCarta1();
             pbCarta3.Image = Properties.Resources.card_game_48983_960_720;
             jog1 = maos[2];
-            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j1 = pbJogada1.Image;
+            pbCarta1.Enabled = false;
+            pbCarta2.Enabled = false;
+            pbCarta3.Enabled = false;
         }
 
        
@@ -482,8 +622,11 @@ namespace BaralhoHttp
             reporCarta2();
             pbCarta4.Image = Properties.Resources.card_game_48983_960_720;
             jog2 = maos[0];
-            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j2 = pbJogada2.Image;
+            pbCarta4.Enabled = false;
+            pbCarta5.Enabled = false;
+            pbCarta6.Enabled = false;
         }
 
         private void pbCarta5_Click(object sender, EventArgs e)
@@ -493,8 +636,11 @@ namespace BaralhoHttp
             reporCarta2();
             pbCarta5.Image = Properties.Resources.card_game_48983_960_720;
             jog2 = maos[1];
-            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j2 = pbJogada2.Image;
+            pbCarta4.Enabled = false;
+            pbCarta5.Enabled = false;
+            pbCarta6.Enabled = false;
         }
 
         private void pbCarta6_Click(object sender, EventArgs e)
@@ -504,29 +650,88 @@ namespace BaralhoHttp
             reporCarta2();
             pbCarta6.Image = Properties.Resources.card_game_48983_960_720;
             jog2 = maos[2];
-            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada);
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             j2 = pbJogada2.Image;
+            pbCarta4.Enabled = false;
+            pbCarta5.Enabled = false;
+            pbCarta6.Enabled = false;
         }
 
         private void tmrResultado_Tick(object sender, EventArgs e)
         {
             dados = getDadosHttp();
             jooj = new Jogador();
+            confirm = getConfirmaHttp();
             if (jooj.getJogador().StartsWith("N") && dados.jogadorS.Contains('/'))
-                pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
-            if (jooj.getJogador().StartsWith("S") && dados.jogadorN.Contains('/'))
-                pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
-            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/'))
             {
+                pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
+                putConfirmasHttp(confirm.confirma + 1);
+            }
+                
+            if (jooj.getJogador().StartsWith("S") && dados.jogadorN.Contains('/'))
+            {
+                pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
+                putConfirmasHttp(confirm.confirma + 1);
+            }
+                
+            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/') && confirm.confirma >= 2)
+            {
+                
                 lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha));
+                putConfirmasHttp(0);
+                // jooj.setCartasJogadas(jooj.getCartasJogadas() + 1);
+
+                j1 = Properties.Resources.card_game_48983_960_720;
+                j2 = Properties.Resources.card_game_48983_960_720;
+                
+                putDadosHttp("Conectado", "Conectado", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, dados.numeroCartasJogadas);
+
+                if (jooj.getJogador().StartsWith("S"))
+                {
+                    pbCarta1.Enabled = true;
+                    pbCarta2.Enabled = true;
+                    pbCarta3.Enabled = true;
+                }
+                if (jooj.getJogador().StartsWith("N"))
+                {
+                    pbCarta4.Enabled = true;
+                    pbCarta5.Enabled = true;
+                    pbCarta6.Enabled = true;
+                }
+                    
+                tmrRearranjar.Enabled = true;
+                    
             } 
+        }
+        private void tmrRearranjar_Tick(object sender, EventArgs e)
+        {
+            dados = getDadosHttp();
+            jooj = new Jogador();
+
+            if (dados.numeroCartasJogadas >= 6)
+            {
+                if (lblResultado.Text.Contains("Sul"))
+                    putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH + dados.valorRodada, dados.pontosV, 1, 0);
+               
+                
+            
+                if (lblResultado.Text.Contains("Norte"))
+                    putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
+                
+                novaRodada();
+                pbVitoria1.Image = null;
+                pbVitoria2.Image = null;
+                lblResultado.Text = "Nova Rodada";
+            }
+            tmrRearranjar.Enabled = false;
         }
 
         private void BaralhoHttp_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.R)
             {
-                putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1);
+                putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1, 0);
+                putConfirmasHttp(0);
                 deck = new Deck();
                 putBaralhoHttp(deck);
             }
@@ -545,28 +750,30 @@ namespace BaralhoHttp
             if (j.getJogador().StartsWith("N"))
             {
 
-                putDadosHttp("-", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp("-", data.jogadorS, data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
 
             }
             else if (j.getJogador().StartsWith("S"))
             {
 
-                putDadosHttp(data.jogadorN, "-", data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, "-", data.jogadorL, data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
 
             }
             else if (j.getJogador().StartsWith("L"))
             {
 
-                putDadosHttp(data.jogadorN, data.jogadorS, "-", data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, data.jogadorS, "-", data.jogadorO, data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
 
             }
             else if (j.getJogador().StartsWith("O"))
             {
 
-                putDadosHttp(data.jogadorN, data.jogadorS, data.jogadorL, "-", data.manilha, data.pontosH, data.pontosV, data.valorRodada);
+                putDadosHttp(data.jogadorN, data.jogadorS, data.jogadorL, "-", data.manilha, data.pontosH, data.pontosV, data.valorRodada, dados.numeroCartasJogadas);
 
             }
         }
+
+       
     }
 
 
@@ -606,14 +813,28 @@ namespace BaralhoHttp
         {
             jogador = val;
         }
+        public static int cartasJogadas = 0;
+        public int getCartasJogadas()
+        {
+            return cartasJogadas;
+        }
+        public void setCartasJogadas(int val)
+        {
+            cartasJogadas = val;
+        }
 
-        
+
     }
     public class Carta
     {
        
         public string naipe { get; set; }
         public string numero { get; set; }
+    }
+    public class Confirma
+    {
+
+        public int confirma { get; set; }
     }
     public class Dados
     {
@@ -625,6 +846,7 @@ namespace BaralhoHttp
         public int pontosH { get; set; }
         public int pontosV { get; set; }
         public int valorRodada { get; set; }
+        public int numeroCartasJogadas { get; set; }
 
     }
     public class Deck
@@ -650,7 +872,7 @@ namespace BaralhoHttp
             {
                 DeckOfCartas = deckOfCartas_;
             }
-            else { }
+            else { DeckOfCartas = null; }
             
         }
 
