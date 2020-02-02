@@ -257,6 +257,7 @@
             // 
             // btnTruco
             // 
+            this.btnTruco.Enabled = false;
             this.btnTruco.Location = new System.Drawing.Point(15, 373);
             this.btnTruco.Name = "btnTruco";
             this.btnTruco.Size = new System.Drawing.Size(75, 23);
