@@ -534,7 +534,33 @@ namespace BaralhoHttp
 
 
         }
-        
+
+        public string fraseDoTruco(string tipo)
+        {
+            dados = getDadosHttp();
+            Random r = new Random();
+            string[] frases = { "XABLAU"," CHEGA E CHORA", "VEM PRA CÁ HIHI", "CHORA AGORA, CHORA", "COMIGO EH NO GROSSO MESMO" 
+                    , "DROPEI", "VÊM SE VC AGUENTA", "PODE CORRER JÁ", "*PLÁF* *PLÁF* SE FUDEU", "EU ACREDITO NO CORAÇÃO DAS CARTAS",
+                    "EXCUZE-MOI","TA MEC, TAM MEC", "VEM QUE AQUI TA SAFE", "OBJECTION", "SEGURA QUE VEM PESADO", "LADRÃOZINHO", "TRY ME BICTH","LADRÃO"};
+            return tipo + frases[r.Next(0, frases.Length - 1)];
+
+        }
+        public string gameOver()
+        {
+            dados = getDadosHttp();
+            if(dados.pontosH >= 12)
+            {
+                return "SUL VENCEU";
+            }
+            else if(dados.pontosV >= 12)
+            {
+                return "NORTE VENCEU";
+            }
+            else
+            {
+                return "";
+            }
+        }
 
 
 
@@ -766,15 +792,25 @@ namespace BaralhoHttp
                 if (jooj.getMelhorH() == jooj.getMelhorV())
                     putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
                 dados = getDadosHttp();
-                novaRodada();
-                jooj.setMelhorH(0);
-                jooj.setMelhorV(0);
-                pbVitoria1.Image = null;
-                pbVitoria2.Image = null;
-                lblResultado.Text = "Nova Rodada";
-                lblPontosSul.Text = "Pontos Sul: " + dados.pontosH;
-                lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
-                lblMelhorDeTres.Text = "-";
+                if (gameOver().Contains("VENCEU"))
+                {
+                    MessageBox.Show(gameOver());
+                    this.Close();
+
+                }
+                else
+                {
+                    novaRodada();
+                    jooj.setMelhorH(0);
+                    jooj.setMelhorV(0);
+                    pbVitoria1.Image = null;
+                    pbVitoria2.Image = null;
+                    lblResultado.Text = "Nova Rodada";
+                    lblPontosSul.Text = "Pontos Sul: " + dados.pontosH;
+                    lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
+                    lblMelhorDeTres.Text = "-";
+                }
+                
             }
             tmrRearranjar.Enabled = false;
         }
