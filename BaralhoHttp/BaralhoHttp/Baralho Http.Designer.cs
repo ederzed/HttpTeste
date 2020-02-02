@@ -43,6 +43,11 @@
             this.pbCarta1 = new System.Windows.Forms.PictureBox();
             this.pbBaralho = new System.Windows.Forms.PictureBox();
             this.tmrRearranjar = new System.Windows.Forms.Timer(this.components);
+            this.lblPontosSul = new System.Windows.Forms.Label();
+            this.lblPontosNorte = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblMelhorDeTres = new System.Windows.Forms.Label();
+            this.btnTruco = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbJogada2)).BeginInit();
@@ -214,12 +219,62 @@
             this.tmrRearranjar.Interval = 3000;
             this.tmrRearranjar.Tick += new System.EventHandler(this.tmrRearranjar_Tick);
             // 
+            // lblPontosSul
+            // 
+            this.lblPontosSul.AutoSize = true;
+            this.lblPontosSul.Location = new System.Drawing.Point(517, 425);
+            this.lblPontosSul.Name = "lblPontosSul";
+            this.lblPontosSul.Size = new System.Drawing.Size(70, 13);
+            this.lblPontosSul.TabIndex = 12;
+            this.lblPontosSul.Text = "Pontos Sul: 0";
+            // 
+            // lblPontosNorte
+            // 
+            this.lblPontosNorte.AutoSize = true;
+            this.lblPontosNorte.Location = new System.Drawing.Point(671, 425);
+            this.lblPontosNorte.Name = "lblPontosNorte";
+            this.lblPontosNorte.Size = new System.Drawing.Size(81, 13);
+            this.lblPontosNorte.TabIndex = 13;
+            this.lblPontosNorte.Text = "Pontos Norte: 0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(517, 373);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Rodada:";
+            // 
+            // lblMelhorDeTres
+            // 
+            this.lblMelhorDeTres.AutoSize = true;
+            this.lblMelhorDeTres.Location = new System.Drawing.Point(580, 373);
+            this.lblMelhorDeTres.Name = "lblMelhorDeTres";
+            this.lblMelhorDeTres.Size = new System.Drawing.Size(10, 13);
+            this.lblMelhorDeTres.TabIndex = 15;
+            this.lblMelhorDeTres.Text = "-";
+            // 
+            // btnTruco
+            // 
+            this.btnTruco.Location = new System.Drawing.Point(15, 373);
+            this.btnTruco.Name = "btnTruco";
+            this.btnTruco.Size = new System.Drawing.Size(75, 23);
+            this.btnTruco.TabIndex = 16;
+            this.btnTruco.Text = "TRUCO!";
+            this.btnTruco.UseVisualStyleBackColor = true;
+            // 
             // BaralhoHttp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnTruco);
+            this.Controls.Add(this.lblMelhorDeTres);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPontosNorte);
+            this.Controls.Add(this.lblPontosSul);
             this.Controls.Add(this.pbVitoria2);
             this.Controls.Add(this.pbVitoria1);
             this.Controls.Add(this.lblResultado);
@@ -270,6 +325,11 @@
         private System.Windows.Forms.PictureBox pbVitoria1;
         private System.Windows.Forms.PictureBox pbVitoria2;
         private System.Windows.Forms.Timer tmrRearranjar;
+        private System.Windows.Forms.Label lblPontosSul;
+        private System.Windows.Forms.Label lblPontosNorte;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblMelhorDeTres;
+        private System.Windows.Forms.Button btnTruco;
     }
 }
 

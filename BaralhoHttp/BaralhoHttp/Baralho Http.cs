@@ -346,17 +346,24 @@ namespace BaralhoHttp
             pbVitoria2.Image = null;
             Array.Sort(cartasEmJogo);
             if (cartasEmJogo[cartasEmJogo.Length - 1] == cartasEmJogo[cartasEmJogo.Length - 2])
+            {
+                //melhorDe3("A");
                 return "Amarrou";
+            }
+                
 
             if (cartasEmJogo[cartasEmJogo.Length - 1] == c1)
             {
                 pbVitoria1.Image = Properties.Resources.star;
+               // melhorDe3("H");
                 return "Jogador Sul Venceu";
+
             }
                
             else if (cartasEmJogo[cartasEmJogo.Length - 1] == c2)
             {
                 pbVitoria2.Image = Properties.Resources.star;
+               // melhorDe3("V");
                 return "Jogador Norte Venceu";
             }
 
@@ -429,10 +436,41 @@ namespace BaralhoHttp
 
             return valor;
         }
+        public void melhorDe3(string vencedor)
+        {
+            jooj = new Jogador();
+            if(vencedor == "H")
+            {
+                jooj.setMelhorH(jooj.getMelhorH() + 1);
+                lblMelhorDeTres.Text = lblMelhorDeTres.Text + " Sul,";
+            }if (vencedor == "V")
+            {
+                jooj.setMelhorV(jooj.getMelhorV() + 1);
+                lblMelhorDeTres.Text = lblMelhorDeTres.Text + " Norte,";
+            }
+            if (vencedor == "A")
+            {
+                jooj.setMelhorV(jooj.getMelhorV() + 1);
+                jooj.setMelhorH(jooj.getMelhorH() + 1);
+                lblMelhorDeTres.Text = lblMelhorDeTres.Text + " Amarrou,";
+            }
+            if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() != jooj.getMelhorH())
+            {
+                jooj.setCartasJogadas(99);
+                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, jooj.getCartasJogadas());
+            }else if ((jooj.getMelhorH() >= 3 || jooj.getMelhorV() >= 3) && jooj.getMelhorV() == jooj.getMelhorH())
+            {
+                jooj.setCartasJogadas(99);
+                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, jooj.getCartasJogadas());
 
+            }
+
+        }
         public void novaRodada()
         {
             dados = getDadosHttp();
+            jooj = new Jogador();
+            
             if (jooj.getJogador().EndsWith("Vira"))
             {
                 deck = new Deck();
@@ -662,6 +700,7 @@ namespace BaralhoHttp
             dados = getDadosHttp();
             jooj = new Jogador();
             confirm = getConfirmaHttp();
+            tmrRearranjar.Enabled = true;
             if (jooj.getJogador().StartsWith("N") && dados.jogadorS.Contains('/'))
             {
                 pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
@@ -680,11 +719,17 @@ namespace BaralhoHttp
                 lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha));
                 putConfirmasHttp(0);
                 // jooj.setCartasJogadas(jooj.getCartasJogadas() + 1);
-
+                if (lblResultado.Text.Contains("Sul"))
+                    melhorDe3("H");
+                
+                if (lblResultado.Text.Contains("Norte"))
+                    melhorDe3("V");
+                if (lblResultado.Text.Contains("Amarrou"))
+                    melhorDe3("A");
                 j1 = Properties.Resources.card_game_48983_960_720;
                 j2 = Properties.Resources.card_game_48983_960_720;
-                
-                putDadosHttp("Conectado", "Conectado", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, dados.numeroCartasJogadas);
+                dados = getDadosHttp();
+                putDadosHttp("Conectado", "Conectado", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas);
 
                 if (jooj.getJogador().StartsWith("S"))
                 {
@@ -699,7 +744,7 @@ namespace BaralhoHttp
                     pbCarta6.Enabled = true;
                 }
                     
-                tmrRearranjar.Enabled = true;
+                
                     
             } 
         }
@@ -707,21 +752,29 @@ namespace BaralhoHttp
         {
             dados = getDadosHttp();
             jooj = new Jogador();
-
-            if (dados.numeroCartasJogadas >= 6)
+            confirm = getConfirmaHttp();
+            if (dados.numeroCartasJogadas >= 99 && confirm.confirma == 0)
             {
-                if (lblResultado.Text.Contains("Sul"))
+                if (jooj.getMelhorH() > jooj.getMelhorV())
                     putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH + dados.valorRodada, dados.pontosV, 1, 0);
                
                 
             
-                if (lblResultado.Text.Contains("Norte"))
+                if (jooj.getMelhorV() > jooj.getMelhorH())
                     putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
-                
+
+                if (jooj.getMelhorH() == jooj.getMelhorV())
+                    putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
+                dados = getDadosHttp();
                 novaRodada();
+                jooj.setMelhorH(0);
+                jooj.setMelhorV(0);
                 pbVitoria1.Image = null;
                 pbVitoria2.Image = null;
                 lblResultado.Text = "Nova Rodada";
+                lblPontosSul.Text = "Pontos Sul: " + dados.pontosH;
+                lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
+                lblMelhorDeTres.Text = "-";
             }
             tmrRearranjar.Enabled = false;
         }
@@ -822,8 +875,25 @@ namespace BaralhoHttp
         {
             cartasJogadas = val;
         }
+        public static int melhorH = 0;
+        public int getMelhorH()
+        {
+            return melhorH;
+        }
+        public void setMelhorH(int val)
+        {
+            melhorH = val;
+        }
 
-
+        public static int melhorV = 0;
+        public int getMelhorV()
+        {
+            return melhorV;
+        }
+        public void setMelhorV(int val)
+        {
+            melhorV = val;
+        }
     }
     public class Carta
     {
