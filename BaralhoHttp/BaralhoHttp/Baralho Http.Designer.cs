@@ -48,6 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblMelhorDeTres = new System.Windows.Forms.Label();
             this.btnTruco = new System.Windows.Forms.Button();
+            this.tmrTruco = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbJogada2)).BeginInit();
@@ -257,13 +258,19 @@
             // 
             // btnTruco
             // 
-            this.btnTruco.Enabled = false;
             this.btnTruco.Location = new System.Drawing.Point(15, 373);
             this.btnTruco.Name = "btnTruco";
             this.btnTruco.Size = new System.Drawing.Size(75, 23);
             this.btnTruco.TabIndex = 16;
             this.btnTruco.Text = "TRUCO!";
             this.btnTruco.UseVisualStyleBackColor = true;
+            this.btnTruco.Click += new System.EventHandler(this.btnTruco_Click);
+            // 
+            // tmrTruco
+            // 
+            this.tmrTruco.Enabled = true;
+            this.tmrTruco.Interval = 1000;
+            this.tmrTruco.Tick += new System.EventHandler(this.tmrTruco_Tick);
             // 
             // BaralhoHttp
             // 
@@ -331,6 +338,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMelhorDeTres;
         private System.Windows.Forms.Button btnTruco;
+        private System.Windows.Forms.Timer tmrTruco;
     }
 }
 
