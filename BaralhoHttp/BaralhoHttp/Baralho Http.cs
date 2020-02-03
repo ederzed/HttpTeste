@@ -41,7 +41,7 @@ namespace BaralhoHttp
         private Jogador jooj = new Jogador();
         private Confirma confirm = new Confirma();
         private Truco truco = new Truco();
-        public bool janela;
+        
         
         public Deck deck = new Deck();
         public Dados dados = new Dados();
@@ -513,6 +513,16 @@ namespace BaralhoHttp
 
         public void novaRodada()
         {
+            btnTruco.Enabled = true;
+            btnTruco.Text = "TRUCO!";
+            Truco tr = new Truco();
+            tr.pediu = "-";
+            tr.aceitou = "-";
+            tr.frase = "-";
+            tr.valor = 0;
+            tr.contador = 0;
+            tr.exibir = false;
+            putTrucoHttp(tr);
             dados = getDadosHttp();
             jooj = new Jogador();
 
@@ -896,6 +906,7 @@ namespace BaralhoHttp
                 tr.frase = "-";
                 tr.valor = 0;
                 tr.contador = 0;
+                tr.exibir = false;
                 putTrucoHttp(tr);
             }
         }
@@ -929,12 +940,21 @@ namespace BaralhoHttp
         private void tmrTruco_Tick(object sender, EventArgs e)
         {
             truco = getTrucoHttp();
-            janela = truco.exibir;
+            
             Truco tr = new Truco();
             dados = getDadosHttp();
             jooj = new Jogador();
-            if (truco.pediu != "-" && jooj.getJogador().Replace("-Vira", "") != truco.pediu && janela == true)
+
+            tr.pediu = truco.pediu;
+            tr.aceitou = truco.aceitou;
+            tr.frase = truco.frase;
+            tr.valor = truco.valor;
+            tr.contador = truco.contador;
+            tr.exibir = false;
+            putTrucoHttp(tr);
+            if (truco.pediu != "-" && jooj.getJogador().Replace("-Vira", "") != truco.pediu && truco.exibir == true)
             {
+
                 DialogResult dialogResult = MessageBox.Show(truco.frase + "    (Aceitar?)", nomeJogada(truco.valor) + " DE " + nomeJogador(truco.pediu), MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
