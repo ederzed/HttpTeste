@@ -41,8 +41,8 @@ namespace BaralhoHttp
         private Jogador jooj = new Jogador();
         private Confirma confirm = new Confirma();
         private Truco truco = new Truco();
-        
-        
+
+
         public Deck deck = new Deck();
         public Dados dados = new Dados();
         public Image j1 = null;
@@ -474,7 +474,7 @@ namespace BaralhoHttp
                     putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, jooj.getCartasJogadas());
                 }
             }
-            
+
 
             if (vencedor == "H")
             {
@@ -641,7 +641,7 @@ namespace BaralhoHttp
         private void Form1_Load(object sender, EventArgs e)
         {
             // ERRORS: Partidas de 3 rodadas falham, preciso definir ordem de conexão para td, cascata de boxes no tmrTruco
-            //putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1, 0);
+            // putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1, 0);
             //putBaralhoHttp(deck);
             //putConfirmasHttp(0, 0, 0);
             //Truco tr = new Truco();
@@ -789,19 +789,19 @@ namespace BaralhoHttp
             {
                 pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
 
-                putConfirmasHttp(confirm.confirma + 1, confirm.sul, confirm.norte);
-                
+                putConfirmasHttp(confirm.confirma + 1, 0, 0);
+
             }
 
             if (jooj.getJogador().StartsWith("S") && dados.jogadorN.Contains('/'))
             {
                 pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
 
-                putConfirmasHttp(confirm.confirma + 1, confirm.sul, confirm.norte);
-                
+                putConfirmasHttp(confirm.confirma + 1, 0, 0);
+
             }
 
-            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/') && confirm.confirma >= 2)
+            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/') && confirm.confirma != 0)
             {
                 lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha));
 
@@ -821,23 +821,23 @@ namespace BaralhoHttp
                     pbCarta6.Enabled = true;
                 }
                 confirm = getConfirmaHttp();
-                
-                    if (lblResultado.Text.Contains("Sul"))
-                        melhorDe3("H");
 
-                    if (lblResultado.Text.Contains("Norte"))
-                        melhorDe3("V");
-                    if (lblResultado.Text.Contains("Amarrou"))
-                        melhorDe3("A");
-                   
+                if (lblResultado.Text.Contains("Sul"))
+                    melhorDe3("H");
 
-                
+                if (lblResultado.Text.Contains("Norte"))
+                    melhorDe3("V");
+                if (lblResultado.Text.Contains("Amarrou"))
+                    melhorDe3("A");
+
+
+
                 if (jooj.getJogador().EndsWith("Vira"))
                 {
                     putConfirmasHttp(0, 0, 0);
                     dados = getDadosHttp();
                     putDadosHttp("Conectado", "Conectado", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas);
-                    
+
                 }
             }
             confirm = getConfirmaHttp();
@@ -845,7 +845,10 @@ namespace BaralhoHttp
 
         private void tmrRearranjar_Tick(object sender, EventArgs e)
         {
+
             dados = getDadosHttp();
+            lblPontosSul.Text = "Pontos Sul: " + dados.pontosH;
+            lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
             jooj = new Jogador();
             confirm = getConfirmaHttp();
             if (dados.numeroCartasJogadas >= 99 && confirm.confirma <= 1)
@@ -866,14 +869,28 @@ namespace BaralhoHttp
 
                     if (jooj.getMelhorH() == jooj.getMelhorV())
                         putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
+                    if (pbJogada1.Image == null || pbJogada2.Image == null)
+                    {
+
+                    }
+                    else
+                    {
+                        novaRodada();
+                        jooj.setMelhorH(0);
+                        jooj.setMelhorV(0);
+                        pbVitoria1.Image = null;
+                        pbVitoria2.Image = null;
+                        pbJogada1.Image = null;
+                        pbJogada2.Image = null;
+                        lblResultado.Text = "Nova Rodada";
+                        dados = getDadosHttp();
+                        lblPontosSul.Text = "Pontos Sul: " + dados.pontosH;
+                        lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
+                        lblMelhorDeTres.Text = "-";
+                    }
                 }
                 dados = getDadosHttp();
-                if (gameOver().Contains("VENCEU"))
-                {
-                    MessageBox.Show(gameOver());
-                    this.Close();
-                }
-                else
+                 if (!jooj.getJogador().EndsWith("Vira"))
                 {
                     novaRodada();
                     jooj.setMelhorH(0);
@@ -888,6 +905,12 @@ namespace BaralhoHttp
                     lblPontosNorte.Text = "Pontos Norte: " + dados.pontosV;
                     lblMelhorDeTres.Text = "-";
                 }
+                if (gameOver().Contains("VENCEU"))
+                {
+                    MessageBox.Show(gameOver());
+                    this.Close();
+                }
+
             }
             tmrRearranjar.Enabled = false;
         }
@@ -897,9 +920,8 @@ namespace BaralhoHttp
             if (e.KeyCode == Keys.R)
             {
                 putDadosHttp("-", "-", "-", "-", "-", 0, 0, 1, 0);
-                putConfirmasHttp(0, 0, 0);
-                deck = new Deck();
                 putBaralhoHttp(deck);
+                putConfirmasHttp(0, 0, 0);
                 Truco tr = new Truco();
                 tr.pediu = "-";
                 tr.aceitou = "-";
@@ -940,7 +962,7 @@ namespace BaralhoHttp
         private void tmrTruco_Tick(object sender, EventArgs e)
         {
             truco = getTrucoHttp();
-            
+
             Truco tr = new Truco();
             dados = getDadosHttp();
             jooj = new Jogador();
