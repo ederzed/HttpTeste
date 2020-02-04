@@ -49,6 +49,7 @@
             this.lblMelhorDeTres = new System.Windows.Forms.Label();
             this.btnTruco = new System.Windows.Forms.Button();
             this.tmrTruco = new System.Windows.Forms.Timer(this.components);
+            this.btnEscondidaAberta = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbJogada2)).BeginInit();
@@ -272,12 +273,24 @@
             this.tmrTruco.Interval = 1000;
             this.tmrTruco.Tick += new System.EventHandler(this.tmrTruco_Tick);
             // 
+            // btnEscondidaAberta
+            // 
+            this.btnEscondidaAberta.Enabled = false;
+            this.btnEscondidaAberta.Location = new System.Drawing.Point(96, 373);
+            this.btnEscondidaAberta.Name = "btnEscondidaAberta";
+            this.btnEscondidaAberta.Size = new System.Drawing.Size(75, 23);
+            this.btnEscondidaAberta.TabIndex = 17;
+            this.btnEscondidaAberta.Text = "escondida";
+            this.btnEscondidaAberta.UseVisualStyleBackColor = true;
+            this.btnEscondidaAberta.Click += new System.EventHandler(this.btnEscondidaAberta_Click);
+            // 
             // BaralhoHttp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnEscondidaAberta);
             this.Controls.Add(this.btnTruco);
             this.Controls.Add(this.lblMelhorDeTres);
             this.Controls.Add(this.label1);
@@ -339,6 +352,7 @@
         private System.Windows.Forms.Label lblMelhorDeTres;
         private System.Windows.Forms.Button btnTruco;
         private System.Windows.Forms.Timer tmrTruco;
+        private System.Windows.Forms.Button btnEscondidaAberta;
     }
 }
 
