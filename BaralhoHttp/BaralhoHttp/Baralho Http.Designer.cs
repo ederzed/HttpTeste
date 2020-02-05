@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.lblResultado = new System.Windows.Forms.Label();
-            this.tmrResultado = new System.Windows.Forms.Timer(this.components);
             this.pbVitoria2 = new System.Windows.Forms.PictureBox();
             this.pbVitoria1 = new System.Windows.Forms.PictureBox();
             this.pbJogada2 = new System.Windows.Forms.PictureBox();
@@ -42,14 +41,13 @@
             this.pbCarta2 = new System.Windows.Forms.PictureBox();
             this.pbCarta1 = new System.Windows.Forms.PictureBox();
             this.pbBaralho = new System.Windows.Forms.PictureBox();
-            this.tmrRearranjar = new System.Windows.Forms.Timer(this.components);
             this.lblPontosSul = new System.Windows.Forms.Label();
             this.lblPontosNorte = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblMelhorDeTres = new System.Windows.Forms.Label();
             this.btnTruco = new System.Windows.Forms.Button();
-            this.tmrTruco = new System.Windows.Forms.Timer(this.components);
             this.btnEscondidaAberta = new System.Windows.Forms.Button();
+            this.tmrAltera = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbJogada2)).BeginInit();
@@ -71,12 +69,6 @@
             this.lblResultado.Size = new System.Drawing.Size(120, 13);
             this.lblResultado.TabIndex = 9;
             this.lblResultado.Text = "Aguardando Oponentes";
-            // 
-            // tmrResultado
-            // 
-            this.tmrResultado.Enabled = true;
-            this.tmrResultado.Interval = 1000;
-            this.tmrResultado.Tick += new System.EventHandler(this.tmrResultado_Tick);
             // 
             // pbVitoria2
             // 
@@ -216,11 +208,6 @@
             this.pbBaralho.TabIndex = 0;
             this.pbBaralho.TabStop = false;
             // 
-            // tmrRearranjar
-            // 
-            this.tmrRearranjar.Interval = 3000;
-            this.tmrRearranjar.Tick += new System.EventHandler(this.tmrRearranjar_Tick);
-            // 
             // lblPontosSul
             // 
             this.lblPontosSul.AutoSize = true;
@@ -267,12 +254,6 @@
             this.btnTruco.UseVisualStyleBackColor = true;
             this.btnTruco.Click += new System.EventHandler(this.btnTruco_Click);
             // 
-            // tmrTruco
-            // 
-            this.tmrTruco.Enabled = true;
-            this.tmrTruco.Interval = 1000;
-            this.tmrTruco.Tick += new System.EventHandler(this.tmrTruco_Tick);
-            // 
             // btnEscondidaAberta
             // 
             this.btnEscondidaAberta.Enabled = false;
@@ -283,6 +264,12 @@
             this.btnEscondidaAberta.Text = "escondida";
             this.btnEscondidaAberta.UseVisualStyleBackColor = true;
             this.btnEscondidaAberta.Click += new System.EventHandler(this.btnEscondidaAberta_Click);
+            // 
+            // tmrAltera
+            // 
+            this.tmrAltera.Enabled = true;
+            this.tmrAltera.Interval = 500;
+            this.tmrAltera.Tick += new System.EventHandler(this.tmrAltera_Tick);
             // 
             // BaralhoHttp
             // 
@@ -310,7 +297,7 @@
             this.Controls.Add(this.pbBaralho);
             this.Name = "BaralhoHttp";
             this.Text = "Baralho Http";
-            this.Deactivate += new System.EventHandler(this.BaralhoHttp_Deactivate);
+            
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BaralhoHttp_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BaralhoHttp_KeyDown);
@@ -342,17 +329,15 @@
         private System.Windows.Forms.PictureBox pbJogada1;
         private System.Windows.Forms.PictureBox pbJogada2;
         private System.Windows.Forms.Label lblResultado;
-        private System.Windows.Forms.Timer tmrResultado;
         private System.Windows.Forms.PictureBox pbVitoria1;
         private System.Windows.Forms.PictureBox pbVitoria2;
-        private System.Windows.Forms.Timer tmrRearranjar;
         private System.Windows.Forms.Label lblPontosSul;
         private System.Windows.Forms.Label lblPontosNorte;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMelhorDeTres;
         private System.Windows.Forms.Button btnTruco;
-        private System.Windows.Forms.Timer tmrTruco;
         private System.Windows.Forms.Button btnEscondidaAberta;
+        private System.Windows.Forms.Timer tmrAltera;
     }
 }
 
