@@ -593,14 +593,25 @@ namespace BaralhoHttp
         {
             confirm = getConfirmaHttp();
             dados = getDadosHttp();
-            if(lblResultado.Text.Contains("VEZ"))
+            if(!(dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/')))
             {
                 if (turnoAtual == "N")
                     putConfirmasHttp(confirm.confirma, "S", confirm.primeiroPlayer);
                 if (turnoAtual == "S")
                     putConfirmasHttp(confirm.confirma, "N", confirm.primeiroPlayer);
             }
-            else if (!lblResultado.Text.Contains("VEZ") && (dados.numeroCartasJogadas % 2) == 0)
+            else
+            {
+                if (verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha)).Contains("Sul"))
+                    putConfirmasHttp(confirm.confirma, "S", confirm.primeiroPlayer);
+                if (verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha)).Contains("Norte"))
+                    putConfirmasHttp(confirm.confirma, "N", confirm.primeiroPlayer);
+                if (verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha)).Contains("Amarrou"))
+                    putConfirmasHttp(confirm.confirma, confirm.primeiroPlayer, confirm.primeiroPlayer);
+            }
+
+
+            if (!lblResultado.Text.Contains("VEZ") && (dados.numeroCartasJogadas % 2) == 0)
             {
                 if(lblResultado.Text.Contains("Norte"))
                     putConfirmasHttp(confirm.confirma, "N", confirm.primeiroPlayer);
