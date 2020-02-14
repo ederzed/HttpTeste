@@ -65,8 +65,8 @@ namespace BaralhoHttp
         public Dados dados = new Dados();
 
         // definidores de certos eventos
-        public int contMelhorDe3;
-
+        public int contMelhorDe3 = 0;
+        public int contConfirma = 0;
         public bool escondida = false;
         public bool maode11 = false;
 
@@ -772,21 +772,23 @@ namespace BaralhoHttp
             if (jooj.getJogador().StartsWith("N") && dados.jogadorS.Contains('/'))
             {
                 pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
-
-                putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
+                if(contConfirma == 0)
+                    putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
+                contConfirma++;
                 contMelhorDe3 = 0;
             }
 
             if (jooj.getJogador().StartsWith("S") && dados.jogadorN.Contains('/'))
             {
                 pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
-
-                putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
+                if (contConfirma == 0)
+                    putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
+                contConfirma++;
                 contMelhorDe3 = 0;
             }
             confirm = getConfirmaHttp();
             dados = getDadosHttp();
-            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/') && confirm.confirma != 0 && !confirm.turno.Contains("Rodada"))
+            if (dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/') && confirm.confirma == 2 && !confirm.turno.Contains("Rodada"))
             {
                 putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
             }
@@ -798,34 +800,34 @@ namespace BaralhoHttp
         {
             dados = getDadosHttp();
             confirm = getConfirmaHttp();
-
+            contConfirma = 0;
             lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha));
 
-            
-            //if (contMelhorDe3 == 0)
-            //{
-            //    if (lblResultado.Text.Contains("Sul"))
-            //        melhorDe3("H");
 
-            //    if (lblResultado.Text.Contains("Norte"))
-            //        melhorDe3("V");
-            //    if (lblResultado.Text.Contains("Amarrou"))
-            //        melhorDe3("A");
-            //}
-            //contMelhorDe3++;
+            if (contMelhorDe3 == 0)
+            {
+                if (lblResultado.Text.Contains("Sul"))
+                    melhorDe3("H");
+
+                if (lblResultado.Text.Contains("Norte"))
+                    melhorDe3("V");
+                if (lblResultado.Text.Contains("Amarrou"))
+                    melhorDe3("A");
+            }
+            contMelhorDe3++;
             j1 = Properties.Resources.card_game_48983_960_720;
             j2 = Properties.Resources.card_game_48983_960_720;
 
             
             if (jooj.getJogador().StartsWith("S"))
             {
-                putConfirmasHttp(confirm.confirma + 1, "RodadaN", confirm.primeiroPlayer);
+                putConfirmasHttp(confirm.confirma, "RodadaN", confirm.primeiroPlayer);
                 
             }
             if (jooj.getJogador().StartsWith("N"))
             {
                 putDadosHttp("Conectado", "Conectado", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas);
-                putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
+                putConfirmasHttp(confirm.confirma, confirm.turno, confirm.primeiroPlayer);
                 proxTurno("");
             }
 
