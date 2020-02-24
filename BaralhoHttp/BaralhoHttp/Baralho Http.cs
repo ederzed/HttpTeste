@@ -973,10 +973,10 @@ namespace BaralhoHttp
 
         //ESSE AQUI EU NEM TESTEI AINDA
 
-        public void MetodoTruco()
+        public void MetodoTrucoAceita()
         {
             truco = getTrucoHttp();
-
+            confirm = getConfirmaHttp();
             Truco tr = new Truco();
             dados = getDadosHttp();
             jooj = new Jogador();
@@ -994,6 +994,7 @@ namespace BaralhoHttp
                 DialogResult dialogResult = MessageBox.Show(truco.frase + "    (Aceitar?)", nomeJogada(truco.valor) + " DE " + nomeJogador(truco.pediu), MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
+                    putConfirmasHttp(confirm.confirma, truco.pediu, confirm.primeiroPlayer);
                     tr.pediu = "-";
                     tr.aceitou = jooj.getJogador().Replace("-Vira", "");
                     tr.frase = "-";
@@ -1007,6 +1008,7 @@ namespace BaralhoHttp
                 }
                 else if (dialogResult == DialogResult.No)
                 {
+                    putConfirmasHttp(confirm.confirma, truco.pediu, confirm.primeiroPlayer);
                     truco = getTrucoHttp();
                     tr.pediu = truco.pediu;
                     tr.aceitou = truco.aceitou;
@@ -1017,19 +1019,23 @@ namespace BaralhoHttp
                     putTrucoHttp(tr);
                 }
             }
+            
+        }
+        public void MetodoTrucoCorreram()
+        {
             truco = getTrucoHttp();
 
             if (truco.contador >= 1 && truco.pediu == jooj.getJogador().Replace("-Vira", ""))
             {
                 dados = getDadosHttp();
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
+                
                 putConfirmasHttp(0, novoPrimeiroPlayer(), novoPrimeiroPlayer());
                 truco = getTrucoHttp();
                 MessageBox.Show("Não Aceitaram, a rodada é sua.");
                 rearranjar();
             }
         }
-
         // EVENTOS DO FORM
         // EVENTOS DO FORM
         // EVENTOS DO FORM
@@ -1335,10 +1341,14 @@ namespace BaralhoHttp
             {
                 rearranjar();
             }
-
+            truco = getTrucoHttp();
             if ("Truco" == confirm.turno)
             {
-                MetodoTruco();
+                if(truco.pediu != jooj.getJogador().Replace("-Vira", ""))
+                    MetodoTrucoAceita();
+                if (truco.aceitou != jooj.getJogador().Replace("-Vira", "") && truco.pediu == "-")
+                    MetodoTrucoCorreram();
+                
             }
         }
     }
