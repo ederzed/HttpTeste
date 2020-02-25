@@ -553,7 +553,7 @@ namespace BaralhoHttp
         public void melhorDe3(string vencedor)
         {
             jooj = new Jogador();
-            
+
             if (vencedor == "H")
             {
                 jooj.setMelhorH(jooj.getMelhorH() + 1);
@@ -573,12 +573,12 @@ namespace BaralhoHttp
 
             if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() != jooj.getMelhorH())
             {
-                
+
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
             }
             else if ((jooj.getMelhorH() >= 3 || jooj.getMelhorV() >= 3) && jooj.getMelhorV() == jooj.getMelhorH())
             {
-                
+
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
             }
         }
@@ -589,7 +589,7 @@ namespace BaralhoHttp
         {
             confirm = getConfirmaHttp();
             dados = getDadosHttp();
-            if(!(dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/')))
+            if (!(dados.jogadorN.Contains('/') && dados.jogadorS.Contains('/')))
             {
                 if (turnoAtual == "N")
                     putConfirmasHttp(confirm.confirma, "S", confirm.primeiroPlayer);
@@ -609,16 +609,16 @@ namespace BaralhoHttp
 
             if (!lblResultado.Text.Contains("VEZ") && (dados.numeroCartasJogadas % 2) == 0)
             {
-                if(lblResultado.Text.Contains("Norte"))
+                if (lblResultado.Text.Contains("Norte"))
                     putConfirmasHttp(confirm.confirma, "N", confirm.primeiroPlayer);
                 if (lblResultado.Text.Contains("Sul"))
                     putConfirmasHttp(confirm.confirma, "S", confirm.primeiroPlayer);
                 if (lblResultado.Text.Contains("Amarrou"))
                     putConfirmasHttp(confirm.confirma, confirm.primeiroPlayer, confirm.primeiroPlayer);
 
-                
+
             }
-           
+
         }
 
         //RESETA AS MÃOS E OS SERVERS QND ALGUEM PONTUA (N TESTEI NA NOVA DINÂMICA AINDA, PQ O RESTO AINDA N FUNCIONOU)
@@ -783,7 +783,7 @@ namespace BaralhoHttp
             if (jooj.getJogador().StartsWith("N") && dados.jogadorS.Contains('/'))
             {
                 pbJogada1.Image = escolheCarta(stringToCarta(dados.jogadorS));
-                if(contConfirma == 0)
+                if (contConfirma == 0)
                     putConfirmasHttp(confirm.confirma + 1, confirm.turno, confirm.primeiroPlayer);
                 contConfirma++;
                 contMelhorDe3 = 0;
@@ -812,8 +812,8 @@ namespace BaralhoHttp
             dados = getDadosHttp();
             confirm = getConfirmaHttp();
             contConfirma = 0;
-            
-            
+
+
             lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.manilha));
 
 
@@ -831,10 +831,10 @@ namespace BaralhoHttp
             j1 = Properties.Resources.card_game_48983_960_720;
             j2 = Properties.Resources.card_game_48983_960_720;
 
-            
+
             if (jooj.getJogador().StartsWith("S"))
             {
-                
+
                 if (dados.numeroCartasJogadas >= 99)
                 {
                     putConfirmasHttp(0, "RodadaN", confirm.primeiroPlayer);
@@ -859,10 +859,10 @@ namespace BaralhoHttp
                 {
                     proxTurno("");
                 }
-                
+
             }
 
-            
+
         }
 
         public void rearranjar()
@@ -871,10 +871,18 @@ namespace BaralhoHttp
 
             jooj = new Jogador();
             confirm = getConfirmaHttp();
-            
+
             if ((dados.numeroCartasJogadas >= 99 && confirm.confirma <= 1) || confirm.turno.Contains("nova"))
             {
                 confirm = getConfirmaHttp();
+                if(dados.numeroCartasJogadas == 147)
+                {
+                    truco = getTrucoHttp();
+                    if (truco.pediu == "S")
+                        jooj.setMelhorH(7);
+                    if (truco.pediu == "N")
+                        jooj.setMelhorV(7);
+                }
                 if (jooj.getJogador().EndsWith("Vira") && getConfirmaHttp().turno == "S")
                 {
                     putConfirmasHttp(0, novoPrimeiroPlayer(), novoPrimeiroPlayer());
@@ -1008,7 +1016,7 @@ namespace BaralhoHttp
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    putConfirmasHttp(confirm.confirma, truco.pediu, confirm.primeiroPlayer);
+                    
                     truco = getTrucoHttp();
                     tr.pediu = truco.pediu;
                     tr.aceitou = truco.aceitou;
@@ -1019,22 +1027,32 @@ namespace BaralhoHttp
                     putTrucoHttp(tr);
                 }
             }
-            
+
         }
         public void MetodoTrucoCorreram()
         {
+            int val = 1;
+            dados = getDadosHttp();
             truco = getTrucoHttp();
-
-            if (truco.contador >= 1 && truco.pediu == jooj.getJogador().Replace("-Vira", ""))
+            if (truco.valor > 3)
+                val = truco.valor - 3;
+            confirm = getConfirmaHttp();
+            putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
+            if(truco.pediu == "S")
             {
-                dados = getDadosHttp();
-                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
+                putDadosHttp("esc/esc", "3/Paus", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
                 
-                putConfirmasHttp(0, novoPrimeiroPlayer(), novoPrimeiroPlayer());
-                truco = getTrucoHttp();
-                MessageBox.Show("Não Aceitaram, a rodada é sua.");
-                rearranjar();
             }
+                
+            if (truco.pediu == "N")
+            {
+                putDadosHttp("3/Paus", "esc/esc", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
+                
+
+            }
+            MessageBox.Show("Não Aceitaram, a rodada é sua.");
+            
+
         }
         // EVENTOS DO FORM
         // EVENTOS DO FORM
@@ -1128,7 +1146,7 @@ namespace BaralhoHttp
                 proxTurno("S");
             putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             confirm = getConfirmaHttp();
-            
+
             pbCarta1.Enabled = false;
             pbCarta2.Enabled = false;
             pbCarta3.Enabled = false;
@@ -1152,7 +1170,7 @@ namespace BaralhoHttp
                 proxTurno("S");
             putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             confirm = getConfirmaHttp();
-            
+
             pbCarta1.Enabled = false;
             pbCarta2.Enabled = false;
             pbCarta3.Enabled = false;
@@ -1176,7 +1194,7 @@ namespace BaralhoHttp
                 proxTurno("N");
             putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             confirm = getConfirmaHttp();
-            
+
             pbCarta4.Enabled = false;
             pbCarta5.Enabled = false;
             pbCarta6.Enabled = false;
@@ -1200,7 +1218,7 @@ namespace BaralhoHttp
                 proxTurno("N");
             putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
             confirm = getConfirmaHttp();
-            
+
             pbCarta4.Enabled = false;
             pbCarta5.Enabled = false;
             pbCarta6.Enabled = false;
@@ -1224,7 +1242,7 @@ namespace BaralhoHttp
                 pbJogada2.Image = Properties.Resources.card_game_48983_960_720;
             }
             confirm = getConfirmaHttp();
-            
+
             pbCarta4.Enabled = false;
             pbCarta5.Enabled = false;
             pbCarta6.Enabled = false;
@@ -1333,6 +1351,7 @@ namespace BaralhoHttp
             {
                 rodada1();
             }
+
             if (confirm.turno.Contains("Rodada") && confirm.turno.Contains(jooj.getJogador().Replace("-Vira", "")))
             {
                 rodada2();
@@ -1344,11 +1363,11 @@ namespace BaralhoHttp
             truco = getTrucoHttp();
             if ("Truco" == confirm.turno)
             {
-                if(truco.pediu != jooj.getJogador().Replace("-Vira", ""))
+                if (truco.pediu != jooj.getJogador().Replace("-Vira", ""))
                     MetodoTrucoAceita();
-                if (truco.aceitou != jooj.getJogador().Replace("-Vira", "") && truco.pediu == "-")
+                if (truco.pediu == jooj.getJogador().Replace("-Vira", "") && truco.contador >= 1)
                     MetodoTrucoCorreram();
-                
+
             }
         }
     }
