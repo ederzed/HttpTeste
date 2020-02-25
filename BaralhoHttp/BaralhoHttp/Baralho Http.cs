@@ -581,14 +581,12 @@ namespace BaralhoHttp
 
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
             }
-            else if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() == jooj.getMelhorH())
+            else if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() == jooj.getMelhorH() && VencedorDaPrimeira() != "- Amarrou")
             {
-
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 123);
             }
             else if ((jooj.getMelhorH() >= 3 || jooj.getMelhorV() >= 3) && jooj.getMelhorV() == jooj.getMelhorH())
             {
-
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
             }
         }
@@ -902,16 +900,16 @@ namespace BaralhoHttp
                     if (jooj.getMelhorV() > jooj.getMelhorH())
                         putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
 
-                    if (jooj.getMelhorH() == jooj.getMelhorV() && !(dados.numeroCartasJogadas == 123))
+                    if (jooj.getMelhorH() == jooj.getMelhorV() && dados.numeroCartasJogadas != 123)
                         putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
                     else if (dados.numeroCartasJogadas == 123)
                     {
-                        if(VencedorDaPrimeira() == "-Norte")
+                        if(VencedorDaPrimeira() == "- Norte")
                             putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
-                        if (VencedorDaPrimeira() == "-Sul")
+                        if (VencedorDaPrimeira() == "- Sul")
                             putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH + dados.valorRodada, dados.pontosV, 1, 0);
                     }
-                    if ((pbJogada1.Image == null || pbJogada2.Image == null) && !maode11)
+                    if ((pbJogada1.Image == null || pbJogada2.Image == null) && !maode11 && dados.numeroCartasJogadas != 147)
                     {
                     }
                     else
@@ -939,11 +937,25 @@ namespace BaralhoHttp
                             }
                             else if (dialogResult == DialogResult.No)
                             {
+                                int val = 1;
                                 dados = getDadosHttp();
-                                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + 1, dados.valorRodada, 99);
-                                putConfirmasHttp(0, novoPrimeiroPlayer(), novoPrimeiroPlayer());
+                                truco = getTrucoHttp();
+                              
+                                confirm = getConfirmaHttp();
+                                putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
+                                if (jooj.getJogador().Replace("-Vira","") == "N")
+                                {
+                                    putDadosHttp("esc/esc", "3/Paus", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
 
-                                rearranjar();
+                                }
+
+                                if (jooj.getJogador().Replace("-Vira", "") == "S")
+                                {
+                                    putDadosHttp("3/Paus", "esc/esc", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
+
+
+                                }
+                                MessageBox.Show("PRÓXIMA");
                             }
                         }
                     }
@@ -976,11 +988,25 @@ namespace BaralhoHttp
                         }
                         else if (dialogResult == DialogResult.No)
                         {
+                            int val = 1;
                             dados = getDadosHttp();
-                            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH + 1, dados.pontosV, dados.valorRodada, 99);
-                            putConfirmasHttp(0, novoPrimeiroPlayer(), novoPrimeiroPlayer());
+                            truco = getTrucoHttp();
 
-                            rearranjar();
+                            confirm = getConfirmaHttp();
+                            putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
+                            if (jooj.getJogador().Replace("-Vira", "") == "N")
+                            {
+                                putDadosHttp("esc/esc", "3/Paus", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
+
+                            }
+
+                            if (jooj.getJogador().Replace("-Vira", "") == "S")
+                            {
+                                putDadosHttp("3/Paus", "esc/esc", dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, val, 147);
+
+
+                            }
+                            MessageBox.Show("PRÓXIMA");
                         }
                     }
                 }
