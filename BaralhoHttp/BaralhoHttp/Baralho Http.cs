@@ -293,6 +293,11 @@ namespace BaralhoHttp
         // MÉTODOS ALÉM DE PUT E GET
         // MÉTODOS ALÉM DE PUT E GET
 
+        public string VencedorDaPrimeira()
+        {
+            string[] vencedores = lblMelhorDeTres.Text.Split(',');
+            return vencedores[0];
+        }
         //FUNCIONANDO
 
         public void conectar()
@@ -575,6 +580,11 @@ namespace BaralhoHttp
             {
 
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
+            }
+            else if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() == jooj.getMelhorH())
+            {
+
+                putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 123);
             }
             else if ((jooj.getMelhorH() >= 3 || jooj.getMelhorV() >= 3) && jooj.getMelhorV() == jooj.getMelhorH())
             {
@@ -892,8 +902,15 @@ namespace BaralhoHttp
                     if (jooj.getMelhorV() > jooj.getMelhorH())
                         putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
 
-                    if (jooj.getMelhorH() == jooj.getMelhorV())
+                    if (jooj.getMelhorH() == jooj.getMelhorV() && !(dados.numeroCartasJogadas == 123))
                         putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
+                    else if (dados.numeroCartasJogadas == 123)
+                    {
+                        if(VencedorDaPrimeira() == "-Norte")
+                            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV + dados.valorRodada, 1, 0);
+                        if (VencedorDaPrimeira() == "-Sul")
+                            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH + dados.valorRodada, dados.pontosV, 1, 0);
+                    }
                     if ((pbJogada1.Image == null || pbJogada2.Image == null) && !maode11)
                     {
                     }
@@ -1293,7 +1310,7 @@ namespace BaralhoHttp
             }
         }
 
-        //N FUNCIONA
+        //FUNCIONA
 
         private void btnTruco_Click(object sender, EventArgs e)
         {
