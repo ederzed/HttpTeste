@@ -942,6 +942,7 @@ namespace BaralhoHttp
                 pbCarta2.Enabled = true;
                 pbCarta3.Enabled = true;
                 btnTruco.Enabled = true;
+                contMelhorDe3 = 0;
             }
             if (confirm.turno == "N")
             {
@@ -949,6 +950,7 @@ namespace BaralhoHttp
                 pbCarta5.Enabled = true;
                 pbCarta6.Enabled = true;
                 btnTruco.Enabled = true;
+                contMelhorDe3 = 0;
             }
             if (confirm.turno == "L")
             {
@@ -956,6 +958,7 @@ namespace BaralhoHttp
                 pbCarta8.Enabled = true;
                 pbCarta9.Enabled = true;
                 btnTruco.Enabled = true;
+                contMelhorDe3 = 0;
             }
             if (confirm.turno == "O")
             {
@@ -963,6 +966,7 @@ namespace BaralhoHttp
                 pbCarta11.Enabled = true;
                 pbCarta12.Enabled = true;
                 btnTruco.Enabled = true;
+                contMelhorDe3 = 0;
             }
 
             if (jooj.getJogador().StartsWith("N") && (dados.jogadorS.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorO.Contains('/')))
@@ -1019,7 +1023,7 @@ namespace BaralhoHttp
                 !confirm.turno.Contains("Rodada"))
             {
                 putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
-                contMelhorDe3 = 0;
+                
             }
         }
 
@@ -1206,7 +1210,7 @@ namespace BaralhoHttp
                 }
                 dados = getDadosHttp();
                 confirm = getConfirmaHttp();
-                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("N"))
+                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("novaN"))
                 {
                     novaRodada();
                     jooj.setMelhorH(0);
@@ -1221,7 +1225,6 @@ namespace BaralhoHttp
                     pbJogada4.Image = null;
                     lblResultado.Text = "Nova Rodada";
                     putConfirmasHttp(0, "novaL", confirm.primeiroPlayer);
-                    putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
                     dados = getDadosHttp();
                     lblPontosLO.Text = "Pontos L/O: " + dados.pontosH;
                     lblPontosNS.Text = "Pontos N/S: " + dados.pontosV;
@@ -1258,7 +1261,7 @@ namespace BaralhoHttp
                         }
                     }
                 }
-                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("L"))
+                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("novaL"))
                 {
                     novaRodada();
                     jooj.setMelhorH(0);
@@ -1273,7 +1276,6 @@ namespace BaralhoHttp
                     pbJogada4.Image = null;
                     lblResultado.Text = "Nova Rodada";
                     putConfirmasHttp(0, "novaO", confirm.primeiroPlayer);
-                    putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, 1, 0);
                     dados = getDadosHttp();
                     lblPontosLO.Text = "Pontos L/O: " + dados.pontosH;
                     lblPontosNS.Text = "Pontos N/S: " + dados.pontosV;
@@ -1310,7 +1312,7 @@ namespace BaralhoHttp
                         }
                     }
                 }
-                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("O"))
+                if (!jooj.getJogador().EndsWith("Vira") && confirm.turno.Contains("novaO"))
                 {
                     novaRodada();
                     jooj.setMelhorH(0);
@@ -1639,13 +1641,14 @@ namespace BaralhoHttp
             jog2 = maos[2];
             if (confirm.turno.Length <= 1)
                 proxTurno("N");
-            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j2 = pbJogada2.Image;
+            
             if (escondida)
             {
                 jog2 = esconde;
                 pbJogada2.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(cartaToString(jog2), dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j2 = pbJogada2.Image;
             confirm = getConfirmaHttp();
 
             pbCarta4.Enabled = false;
@@ -1663,13 +1666,14 @@ namespace BaralhoHttp
             jog3 = maos[0];
             if (confirm.turno.Length <= 1)
                 proxTurno("L");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j3 = pbJogada3.Image;
+            
             if (escondida)
             {
                 jog3 = esconde;
                 pbJogada3.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j3 = pbJogada3.Image;
             confirm = getConfirmaHttp();
 
             pbCarta7.Enabled = false;
@@ -1686,13 +1690,14 @@ namespace BaralhoHttp
             jog3 = maos[1];
             if (confirm.turno.Length <= 1)
                 proxTurno("L");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j3 = pbJogada3.Image;
+           
             if (escondida)
             {
                 jog3 = esconde;
                 pbJogada3.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j3 = pbJogada3.Image;
             confirm = getConfirmaHttp();
 
             pbCarta7.Enabled = false;
@@ -1709,13 +1714,14 @@ namespace BaralhoHttp
             jog3 = maos[2];
             if (confirm.turno.Length <= 1)
                 proxTurno("L");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j3 = pbJogada3.Image;
+            
             if (escondida)
             {
                 jog3 = esconde;
                 pbJogada3.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, cartaToString(jog3), dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j3 = pbJogada3.Image;
             confirm = getConfirmaHttp();
 
             pbCarta7.Enabled = false;
@@ -1733,13 +1739,14 @@ namespace BaralhoHttp
             jog4 = maos[0];
             if (confirm.turno.Length <= 1)
                 proxTurno("O");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j4 = pbJogada4.Image;
+           
             if (escondida)
             {
                 jog4 = esconde;
                 pbJogada4.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j4 = pbJogada4.Image;
             confirm = getConfirmaHttp();
 
             pbCarta10.Enabled = false;
@@ -1756,13 +1763,14 @@ namespace BaralhoHttp
             jog4 = maos[1];
             if (confirm.turno.Length <= 1)
                 proxTurno("O");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j4 = pbJogada4.Image;
+            
             if (escondida)
             {
                 jog4 = esconde;
                 pbJogada4.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j4 = pbJogada4.Image;
             confirm = getConfirmaHttp();
 
             pbCarta10.Enabled = false;
@@ -1779,13 +1787,14 @@ namespace BaralhoHttp
             jog4 = maos[2];
             if (confirm.turno.Length <= 1)
                 proxTurno("O");
-            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            j4 = pbJogada4.Image;
+            
             if (escondida)
             {
                 jog4 = esconde;
                 pbJogada4.Image = Properties.Resources.card_game_48983_960_720;
             }
+            putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, cartaToString(jog4), dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
+            j4 = pbJogada4.Image;
             confirm = getConfirmaHttp();
 
             pbCarta10.Enabled = false;
