@@ -1870,11 +1870,7 @@ namespace BaralhoHttp
 
             }
         }
-
-        private void pbCarta12_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 
     // OUTRAS CLASSES
