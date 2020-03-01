@@ -58,6 +58,7 @@
             this.pbCarta12 = new System.Windows.Forms.PictureBox();
             this.pbCarta11 = new System.Windows.Forms.PictureBox();
             this.pbCarta10 = new System.Windows.Forms.PictureBox();
+            this.lblHitorico = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVitoria1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbJogada2)).BeginInit();
@@ -417,12 +418,28 @@
             this.pbCarta10.TabStop = false;
             this.pbCarta10.Click += new System.EventHandler(this.pbCarta10_Click);
             // 
+            // lblHitorico
+            // 
+            this.lblHitorico.BackColor = System.Drawing.Color.Green;
+            this.lblHitorico.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblHitorico.ForeColor = System.Drawing.SystemColors.Window;
+            this.lblHitorico.Location = new System.Drawing.Point(6, 12);
+            this.lblHitorico.Multiline = true;
+            this.lblHitorico.Name = "lblHitorico";
+            this.lblHitorico.ReadOnly = true;
+            this.lblHitorico.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.lblHitorico.Size = new System.Drawing.Size(276, 158);
+            this.lblHitorico.TabIndex = 29;
+            this.lblHitorico.TabStop = false;
+            this.lblHitorico.Text = "Histórico:";
+            // 
             // BaralhoHttp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblHitorico);
             this.Controls.Add(this.pbVitoria4);
             this.Controls.Add(this.pbCarta12);
             this.Controls.Add(this.pbCarta11);
@@ -513,6 +530,7 @@
         private System.Windows.Forms.PictureBox pbCarta12;
         private System.Windows.Forms.PictureBox pbCarta11;
         private System.Windows.Forms.PictureBox pbCarta10;
+        private System.Windows.Forms.TextBox lblHitorico;
     }
 }
 
