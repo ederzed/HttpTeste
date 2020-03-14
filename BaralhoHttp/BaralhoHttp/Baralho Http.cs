@@ -77,6 +77,7 @@ namespace BaralhoHttp
 
         // definidores de certos eventos
         public int contMelhorDe3 = 0;
+        public int contJanelas = 0;
         public int contConfirma = 0;
         public int contMensagem = 0;
         public string atualizaHistorico = "-";
@@ -105,6 +106,7 @@ namespace BaralhoHttp
 
         //SERVERS
         public String linkBaralho = "https://api.myjson.com/bins/1412o2";
+
         public String linkDados = "https://api.myjson.com/bins/macua";
         public String linkConfirmacao = "http://api.myjson.com/bins/1e9ep6";
         public String linkTruco = "http://api.myjson.com/bins/zvvlq";
@@ -225,7 +227,6 @@ namespace BaralhoHttp
             {
                 Chat c = new Chat()
                 {
-                   
                     texto = tex,
                     cont11 = onze,
                 };
@@ -364,6 +365,7 @@ namespace BaralhoHttp
             string[] vencedores = lblMelhorDeTres.Text.Split(',');
             return vencedores[0];
         }
+
         //FUNCIONANDO
 
         public void conectar()
@@ -701,7 +703,6 @@ namespace BaralhoHttp
 
             if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() != jooj.getMelhorH())
             {
-
                 putDadosHttp(dados.jogadorN, dados.jogadorS, dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, 99);
             }
             else if ((jooj.getMelhorH() >= 2 || jooj.getMelhorV() >= 2) && jooj.getMelhorV() == jooj.getMelhorH() && VencedorDaPrimeira() != "- Amarrou")
@@ -750,7 +751,6 @@ namespace BaralhoHttp
                     putConfirmasHttp(confirm.confirma, confirm.primeiroPlayer, confirm.primeiroPlayer);
             }
 
-
             if (!lblResultado.Text.Contains("VEZ") && (dados.numeroCartasJogadas % 4) == 0)
             {
                 if (lblResultado.Text.Contains("Norte"))
@@ -763,10 +763,7 @@ namespace BaralhoHttp
                     putConfirmasHttp(confirm.confirma, "O", confirm.primeiroPlayer);
                 if (lblResultado.Text.Contains("Amarrou"))
                     putConfirmasHttp(confirm.confirma, confirm.primeiroPlayer, confirm.primeiroPlayer);
-
-
             }
-
         }
 
         //RESETA AS MÃOS E OS SERVERS QND ALGUEM PONTUA (N TESTEI NA NOVA DINÂMICA AINDA, PQ O RESTO AINDA N FUNCIONOU)
@@ -949,14 +946,12 @@ namespace BaralhoHttp
             confirm = getConfirmaHttp();
             truco = getTrucoHttp();
             chat = getChatHttp();
-            
 
             if (atualizaHistorico != chat.texto)
             {
                 atualizaHistorico = chat.texto;
                 lblHitorico.Text += "\r\n" + chat.texto;
             }
-
 
             if (jooj.getJogador().StartsWith("N") && (dados.jogadorS.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorO.Contains('/')))
             {
@@ -966,8 +961,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("S") && (dados.jogadorN.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorO.Contains('/')))
@@ -978,8 +971,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("L") && (dados.jogadorS.Contains('/') || dados.jogadorN.Contains('/') || dados.jogadorO.Contains('/')))
@@ -990,8 +981,6 @@ namespace BaralhoHttp
                     pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("O") && (dados.jogadorS.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorN.Contains('/')))
@@ -1002,8 +991,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorN.Contains('/'))
                     pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
-
-
             }
         }
 
@@ -1057,8 +1044,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("S") && (dados.jogadorN.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorO.Contains('/')))
@@ -1069,8 +1054,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("L") && (dados.jogadorS.Contains('/') || dados.jogadorN.Contains('/') || dados.jogadorO.Contains('/')))
@@ -1081,8 +1064,6 @@ namespace BaralhoHttp
                     pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
                 if (dados.jogadorO.Contains('/'))
                     pbJogada4.Image = escolheCarta(stringToCarta(dados.jogadorO));
-
-
             }
 
             if (jooj.getJogador().StartsWith("O") && (dados.jogadorS.Contains('/') || dados.jogadorL.Contains('/') || dados.jogadorN.Contains('/')))
@@ -1093,8 +1074,6 @@ namespace BaralhoHttp
                     pbJogada3.Image = escolheCarta(stringToCarta(dados.jogadorL));
                 if (dados.jogadorN.Contains('/'))
                     pbJogada2.Image = escolheCarta(stringToCarta(dados.jogadorN));
-
-
             }
             confirm = getConfirmaHttp();
             dados = getDadosHttp();
@@ -1103,7 +1082,6 @@ namespace BaralhoHttp
                 !confirm.turno.Contains("Rodada"))
             {
                 putConfirmasHttp(0, "RodadaS", confirm.primeiroPlayer);
-
             }
         }
 
@@ -1115,9 +1093,7 @@ namespace BaralhoHttp
             confirm = getConfirmaHttp();
             contConfirma = 0;
 
-
             lblResultado.Text = verVencedor(stringToCarta(dados.jogadorS), stringToCarta(dados.jogadorN), stringToCarta(dados.jogadorL), stringToCarta(dados.jogadorO), stringToCarta(dados.manilha));
-
 
             if (contMelhorDe3 == 0)
             {
@@ -1135,10 +1111,8 @@ namespace BaralhoHttp
             j3 = Properties.Resources.card_game_48983_960_720;
             j4 = Properties.Resources.card_game_48983_960_720;
 
-
             if (jooj.getJogador().StartsWith("S"))
             {
-
                 if (dados.numeroCartasJogadas >= 99)
                 {
                     putConfirmasHttp(0, "RodadaL", confirm.primeiroPlayer);
@@ -1148,11 +1122,9 @@ namespace BaralhoHttp
                 {
                     putConfirmasHttp(confirm.confirma, "RodadaL", confirm.primeiroPlayer);
                 }
-
             }
             if (jooj.getJogador().StartsWith("L"))
             {
-
                 if (dados.numeroCartasJogadas >= 99)
                 {
                     putConfirmasHttp(0, "RodadaN", confirm.primeiroPlayer);
@@ -1162,11 +1134,9 @@ namespace BaralhoHttp
                 {
                     putConfirmasHttp(confirm.confirma, "RodadaN", confirm.primeiroPlayer);
                 }
-
             }
             if (jooj.getJogador().StartsWith("N"))
             {
-
                 if (dados.numeroCartasJogadas >= 99)
                 {
                     putConfirmasHttp(0, "RodadaO", confirm.primeiroPlayer);
@@ -1176,7 +1146,6 @@ namespace BaralhoHttp
                 {
                     putConfirmasHttp(confirm.confirma, "RodadaO", confirm.primeiroPlayer);
                 }
-
             }
             if (jooj.getJogador().StartsWith("O"))
             {
@@ -1191,10 +1160,7 @@ namespace BaralhoHttp
                 {
                     proxTurno("");
                 }
-
             }
-
-
         }
 
         public void rearranjar()
@@ -1274,7 +1240,7 @@ namespace BaralhoHttp
                             else if (dialogResult == DialogResult.No)
                             {
                                 chat = getChatHttp();
-                                if(chat.cont11 >= 2)
+                                if (chat.cont11 >= 2)
                                 {
                                     dados = getDadosHttp();
                                     confirm = getConfirmaHttp();
@@ -1296,8 +1262,6 @@ namespace BaralhoHttp
                                 {
                                     putChatHttp("Sul não aceitou a mão de 11", chat.cont11 + 1);
                                 }
-                                
-
                             }
                         }
                     }
@@ -1364,7 +1328,6 @@ namespace BaralhoHttp
                             {
                                 putChatHttp("Norte não aceitou a mão de 11", chat.cont11 + 1);
                             }
-
                         }
                     }
                 }
@@ -1428,7 +1391,6 @@ namespace BaralhoHttp
                             {
                                 putChatHttp("Leste não aceitou a mão de 11", chat.cont11 + 1);
                             }
-
                         }
                     }
                 }
@@ -1493,7 +1455,6 @@ namespace BaralhoHttp
                             {
                                 putChatHttp("Oeste não aceitou a mão de 11", chat.cont11 + 1);
                             }
-
                         }
                     }
                 }
@@ -1533,15 +1494,17 @@ namespace BaralhoHttp
                 ("S" == truco.pediu && jooj.getJogador().Replace("-Vira", "") != "N") ||
                 ("L" == truco.pediu && jooj.getJogador().Replace("-Vira", "") != "O") ||
                 ("O" == truco.pediu && jooj.getJogador().Replace("-Vira", "") != "L"))
-                && truco.exibir == true)
+                && truco.exibir == true && contJanelas == 0)
             {
+                contJanelas++;
                 truco = getTrucoHttp();
                 DialogResult dialogResult = MessageBox.Show(truco.frase + "    (Aceitar?)", nomeJogada(truco.valor) + " DE " + nomeJogador(truco.pediu), MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     truco = getTrucoHttp();
-                    if(truco.aceitou == "-")
+                    if (truco.aceitou == "-")
                     {
+                        truco = getTrucoHttp();
                         putConfirmasHttp(confirm.confirma, truco.pediu, confirm.primeiroPlayer);
                         tr.pediu = "-";
                         tr.aceitou = jooj.getJogador().Replace("-Vira", "");
@@ -1555,14 +1518,13 @@ namespace BaralhoHttp
                         btnTruco.Text = nomeJogada(tr.valor + 3);
                         putChatHttp(nomeJogador(jooj.getJogador().Replace("-Vira", "")) + " aceitou o " + nomeJogada(tr.valor), 0);
                     }
-                   
                 }
                 else if (dialogResult == DialogResult.No)
                 {
                     truco = getTrucoHttp();
                     if (truco.aceitou == "-")
                     {
-                        
+                        truco = getTrucoHttp();
                         tr.pediu = truco.pediu;
                         tr.aceitou = truco.aceitou;
                         tr.frase = truco.frase;
@@ -1574,8 +1536,8 @@ namespace BaralhoHttp
                     }
                 }
             }
-
         }
+
         public void MetodoTrucoCorreram()
         {
             int val = 1;
@@ -1595,9 +1557,9 @@ namespace BaralhoHttp
                 putDadosHttp("3/Paus", "3/Paus", "esc/esc", "esc/esc", dados.manilha, dados.pontosH, dados.pontosV, val, 147);
             }
             MessageBox.Show("Não Aceitaram, a rodada é sua.");
-            putChatHttp("Correram do truco",0);
-
+            putChatHttp("Correram do truco", 0);
         }
+
         // EVENTOS DO FORM
         // EVENTOS DO FORM
         // EVENTOS DO FORM
@@ -1631,7 +1593,6 @@ namespace BaralhoHttp
             deck.Shuffle();
             List<Carta> mao = deck.GoFish(3);
             maos = mao;
-
 
             if (jooj.getJogador().StartsWith("S"))
             {
@@ -1697,14 +1658,14 @@ namespace BaralhoHttp
             if (confirm.turno.Length <= 1)
                 proxTurno("S");
             putDadosHttp(dados.jogadorN, cartaToString(jog1), dados.jogadorL, dados.jogadorO, dados.manilha, dados.pontosH, dados.pontosV, dados.valorRodada, dados.numeroCartasJogadas + 1);
-            putChatHttp("Sul jogou: " + cartaToString(jog1).Replace("/"," de "), chat.cont11);
+            putChatHttp("Sul jogou: " + cartaToString(jog1).Replace("/", " de "), chat.cont11);
             confirm = getConfirmaHttp();
             pbCarta1.Enabled = false;
             pbCarta2.Enabled = false;
             pbCarta3.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
-
         }
+
         private void pbCarta2_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1728,6 +1689,7 @@ namespace BaralhoHttp
             pbCarta3.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta3_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1775,6 +1737,7 @@ namespace BaralhoHttp
             pbCarta6.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta5_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1798,6 +1761,7 @@ namespace BaralhoHttp
             pbCarta6.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta6_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1847,6 +1811,7 @@ namespace BaralhoHttp
             pbCarta9.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta8_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1871,6 +1836,7 @@ namespace BaralhoHttp
             pbCarta9.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta9_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1920,6 +1886,7 @@ namespace BaralhoHttp
             pbCarta12.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta11_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1944,6 +1911,7 @@ namespace BaralhoHttp
             pbCarta12.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         private void pbCarta12_Click(object sender, EventArgs e)
         {
             dados = getDadosHttp();
@@ -1968,6 +1936,7 @@ namespace BaralhoHttp
             pbCarta12.Enabled = false;
             lblResultado.Text = "Aguarde as jogadas";
         }
+
         //R DE RESET
 
         private void BaralhoHttp_KeyDown(object sender, KeyEventArgs e)
@@ -2038,7 +2007,7 @@ namespace BaralhoHttp
             putTrucoHttp(tr);
             confirm = getConfirmaHttp();
             putConfirmasHttp(confirm.confirma, "Truco", confirm.primeiroPlayer);
-            putChatHttp(nomeJogador(jooj.getJogador().Replace("-Vira","")) + " pediu " + nomeJogada(tr.valor), 0);
+            putChatHttp(nomeJogador(jooj.getJogador().Replace("-Vira", "")) + " pediu " + nomeJogada(tr.valor), 0);
             btnTruco.Enabled = false;
         }
 
@@ -2066,9 +2035,12 @@ namespace BaralhoHttp
             lblPontosLO.Text = "Pontos L/O: " + dados.pontosH;
             lblPontosNS.Text = "Pontos N/S: " + dados.pontosV;
             atualizarTela();
+            
             if (lblMelhorDeTres.Text.Contains(","))
                 btnEscondidaAberta.Enabled = true;
             confirm = getConfirmaHttp();
+            if (confirm.turno != "Truco")
+                contJanelas = 0;
             if (jooj.getJogador().Replace("-Vira", "") == confirm.turno)
             {
                 rodada1();
@@ -2093,10 +2065,8 @@ namespace BaralhoHttp
                     MetodoTrucoAceita();
                 if (truco.pediu == jooj.getJogador().Replace("-Vira", "") && truco.contador >= 2)
                     MetodoTrucoCorreram();
-
             }
         }
-
     }
 
     // OUTRAS CLASSES
@@ -2203,13 +2173,14 @@ namespace BaralhoHttp
         public int valor { get; set; }
         public int contador { get; set; }
     }
+
     //  Chat e contador para melhor de 11
     public class Chat
     {
-        
         public string texto { get; set; }
         public int cont11 { get; set; }
     }
+
     // Classe  de baralho q aparece na primeira opção de procura do google, no momento funciona perfeitamente
 
     public class Deck
